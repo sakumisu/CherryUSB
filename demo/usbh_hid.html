@@ -1,0 +1,249 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>HID Host &mdash; CherryUSB 1.6.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=9edc463e" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=d6a008b6"></script>
+      <script src="../_static/doctools.js?v=9a2dae69"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="MSC Host" href="usbh_msc.html" />
+    <link rel="prev" title="Serial Host" href="usbh_serial.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            CherryUSB
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">快速上手</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../quick_start/start.html">入门必看</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../quick_start/demo.html">基于现有 demo 快速验证</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../quick_start/transplant.html">芯片通用移植指南</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../quick_start/rtthread.html">基于 RT-Thread 软件包开发指南</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../quick_start/q%26a.html">Q &amp; A</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../quick_start/migration.html">部分改动迁移指南</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../quick_start/opensource.html">基于 CherryUSB 的开源项目</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../quick_start/usb_speed.html">USB 极限速度测试</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">USB 基本知识点</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../usb/usb2.0_basic.html">USB 基本概念(2.0 为主)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../usb/usb3.0_basic.html">USB 基本概念(3.0 为主)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../usb/usb_desc.html">USB 描述符</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../usb/usb_request.html">USB 设备请求</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../usb/usb_enum.html">USB 枚举</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../usb/usb_ext.html">USB 知识点拓展</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">API 手册</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../api/api_device.html">设备协议栈</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api/api_host.html">主机协议栈</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api/api_port.html">主从驱动</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api/api_config.html">USB CONFIG 说明</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Class 指南</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../class/class_cdc.html">CDC</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../class/class_hid.html">HID</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../class/class_msc.html">MSC</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../class/class_audio.html">UAC</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../class/class_video.html">UVC</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../class/winusb.html">WINUSB</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">例程</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="usbd_cdc_acm.html">CDC ACM Device</a></li>
+<li class="toctree-l1"><a class="reference internal" href="usbd_hid.html">HID Device</a></li>
+<li class="toctree-l1"><a class="reference internal" href="usbd_msc.html">MSC Device</a></li>
+<li class="toctree-l1"><a class="reference internal" href="usbd_audiov1.html">AudioV1 Device</a></li>
+<li class="toctree-l1"><a class="reference internal" href="usbd_audiov2.html">AudioV2 Device</a></li>
+<li class="toctree-l1"><a class="reference internal" href="usbd_video.html">USB Video Device</a></li>
+<li class="toctree-l1"><a class="reference internal" href="usbd_winusb.html">WinUSB Device</a></li>
+<li class="toctree-l1"><a class="reference internal" href="usbd_webusb.html">WebUSB Device</a></li>
+<li class="toctree-l1"><a class="reference internal" href="usbd_rndis.html">CDC RNDIS Device</a></li>
+<li class="toctree-l1"><a class="reference internal" href="usbd_ecm.html">CDC ECM Device</a></li>
+<li class="toctree-l1"><a class="reference internal" href="usbd_adb.html">ADB Device</a></li>
+<li class="toctree-l1"><a class="reference internal" href="usbd_mtp.html">MTP Device</a></li>
+<li class="toctree-l1"><a class="reference internal" href="usbh_serial.html">Serial Host</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">HID Host</a></li>
+<li class="toctree-l1"><a class="reference internal" href="usbh_msc.html">MSC Host</a></li>
+<li class="toctree-l1"><a class="reference internal" href="usbh_net.html">Network Host</a></li>
+<li class="toctree-l1"><a class="reference internal" href="usbh_bluetooth.html">BTBLE Host</a></li>
+<li class="toctree-l1"><a class="reference internal" href="usbh_wifi.html">WIFI Host</a></li>
+<li class="toctree-l1"><a class="reference internal" href="usbh_audio.html">Audio Host</a></li>
+<li class="toctree-l1"><a class="reference internal" href="usbh_video.html">Video Host</a></li>
+<li class="toctree-l1"><a class="reference internal" href="usb_otg.html">USB OTG</a></li>
+<li class="toctree-l1"><a class="reference internal" href="usbd_vendor.html">Vendor Device 驱动编写</a></li>
+<li class="toctree-l1"><a class="reference internal" href="usbh_vendor.html">Vendor Host 驱动编写</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">USBIP 介绍</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../usbip/ohci.html">OHCI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../usbip/ehci.html">EHCI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../usbip/xhci.html">XHCI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../usbip/chipidea.html">CHIPIDEA</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../usbip/dwc2.html">DWC2</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../usbip/musb.html">MUSB</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../usbip/fotg210.html">FOTG210</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../usbip/cdns2.html">CDNS2</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../usbip/cdns3.html">CDNS3</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../usbip/dwc3.html">DWC3</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">工具使用</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../tools/index.html">chryusb_configurator</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tools/index.html#usb-protocol-suite">力科 USB Protocol Suite</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tools/index.html#wireshark">Wireshark</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tools/index.html#audacity">Audacity</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Release Notes</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../version.html">版本说明</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">性能展示</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../show/index.html">性能展示</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">商业支持</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../support/index.html">商业支持</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">CherryUSB</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">HID Host</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/demo/usbh_hid.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="hid-host">
+<h1>HID Host<a class="headerlink" href="#hid-host" title="Link to this heading"></a></h1>
+<p>本节主要介绍 Host HID 类的使用。</p>
+<ul class="simple">
+<li><p>HID 枚举完成回调中创建一次性线程</p></li>
+</ul>
+<div class="highlight-C notranslate"><div class="highlight"><pre><span></span><span class="kt">void</span><span class="w"> </span><span class="nf">usbh_hid_run</span><span class="p">(</span><span class="k">struct</span><span class="w"> </span><span class="nc">usbh_hid</span><span class="w"> </span><span class="o">*</span><span class="n">hid_class</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="n">usb_osal_thread_create</span><span class="p">(</span><span class="s">&quot;usbh_hid&quot;</span><span class="p">,</span><span class="w"> </span><span class="mi">2048</span><span class="p">,</span><span class="w"> </span><span class="n">CONFIG_USBHOST_PSC_PRIO</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">usbh_hid_thread</span><span class="p">,</span><span class="w"> </span><span class="n">hid_class</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="kt">void</span><span class="w"> </span><span class="nf">usbh_hid_stop</span><span class="p">(</span><span class="k">struct</span><span class="w"> </span><span class="nc">usbh_hid</span><span class="w"> </span><span class="o">*</span><span class="n">hid_class</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>这里我们使用 usbh_submit_urb 的异步操作，在中断中处理数据并继续接收下一次数据。</p></li>
+</ul>
+<div class="highlight-C notranslate"><div class="highlight"><pre><span></span><span class="k">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">usbh_hid_thread</span><span class="p">(</span><span class="kt">void</span><span class="w"> </span><span class="o">*</span><span class="n">argument</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">ret</span><span class="p">;</span>
+<span class="w">    </span><span class="k">struct</span><span class="w"> </span><span class="nc">usbh_hid</span><span class="w"> </span><span class="o">*</span><span class="n">hid_class</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="k">struct</span><span class="w"> </span><span class="nc">usbh_hid</span><span class="w"> </span><span class="o">*</span><span class="p">)</span><span class="n">argument</span><span class="p">;</span>
+<span class="w">    </span><span class="p">;</span>
+
+<span class="w">    </span><span class="cm">/* test with only one buffer, if you have more hid class, modify by yourself */</span>
+
+<span class="w">    </span><span class="cm">/* Suggest you to use timer for int transfer and use ep interval */</span>
+<span class="w">    </span><span class="n">usbh_int_urb_fill</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hid_class</span><span class="o">-&gt;</span><span class="n">intin_urb</span><span class="p">,</span><span class="w"> </span><span class="n">hid_class</span><span class="o">-&gt;</span><span class="n">hport</span><span class="p">,</span><span class="w"> </span><span class="n">hid_class</span><span class="o">-&gt;</span><span class="n">intin</span><span class="p">,</span><span class="w"> </span><span class="n">hid_buffer</span><span class="p">,</span><span class="w"> </span><span class="n">hid_class</span><span class="o">-&gt;</span><span class="n">intin</span><span class="o">-&gt;</span><span class="n">wMaxPacketSize</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="n">usbh_hid_callback</span><span class="p">,</span><span class="w"> </span><span class="n">hid_class</span><span class="p">);</span>
+<span class="w">    </span><span class="n">ret</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">usbh_submit_urb</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hid_class</span><span class="o">-&gt;</span><span class="n">intin_urb</span><span class="p">);</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">ret</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">goto</span><span class="w"> </span><span class="n">delete</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="c1">// clang-format off</span>
+<span class="nl">delete</span><span class="p">:</span>
+<span class="w">    </span><span class="n">usb_osal_thread_delete</span><span class="p">(</span><span class="nb">NULL</span><span class="p">);</span>
+<span class="w">    </span><span class="c1">// clang-format on</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>当然，也可以不使用异步操作，而是使用 timeout 的同步操作。</p></li>
+<li><p>HID 使用的是中断传输，因此正常来说，我们需要根据 <strong>bInterval</strong> 来设置定时器，定时触发中断传输，demo 这里没有使用，如果对时间有精确要求，可以选择使用定时器来触发异步发送。</p></li>
+<li><p>以 hub 通信为例，采用的是一次性定时器，也可以使用周期性定时器。</p></li>
+</ul>
+<div class="highlight-C notranslate"><div class="highlight"><pre><span></span><span class="n">hub</span><span class="o">-&gt;</span><span class="n">int_timer</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">usb_osal_timer_create</span><span class="p">(</span><span class="s">&quot;hubint_tim&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">USBH_GET_URB_INTERVAL</span><span class="p">(</span><span class="n">hub</span><span class="o">-&gt;</span><span class="n">intin</span><span class="o">-&gt;</span><span class="n">bInterval</span><span class="p">,</span><span class="w"> </span><span class="n">hport</span><span class="o">-&gt;</span><span class="n">speed</span><span class="p">)</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mi">1000</span><span class="p">,</span><span class="w"> </span><span class="n">hub_int_timeout</span><span class="p">,</span><span class="w"> </span><span class="n">hub</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">);</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>这里的 <cite>USBH_GET_URB_INTERVAL</cite> 是一个宏定义，用于根据 binterval 计算 URB 的传输间隔时间, 单位是 us，而定时器最低是 ms ，因此需要除以 1000。对于小于等于 1ms 的不需要使用定时器。</p>
+</div>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="usbh_serial.html" class="btn btn-neutral float-left" title="Serial Host" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="usbh_msc.html" class="btn btn-neutral float-right" title="MSC Host" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022 ~ 2026, sakumisu.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

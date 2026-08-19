@@ -1,0 +1,359 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Network Host &mdash; CherryUSB 1.6.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=9edc463e" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=d6a008b6"></script>
+      <script src="../_static/doctools.js?v=9a2dae69"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="BTBLE Host" href="usbh_bluetooth.html" />
+    <link rel="prev" title="MSC Host" href="usbh_msc.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            CherryUSB
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">快速上手</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../quick_start/start.html">入门必看</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../quick_start/demo.html">基于现有 demo 快速验证</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../quick_start/transplant.html">芯片通用移植指南</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../quick_start/rtthread.html">基于 RT-Thread 软件包开发指南</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../quick_start/q%26a.html">Q &amp; A</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../quick_start/migration.html">部分改动迁移指南</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../quick_start/opensource.html">基于 CherryUSB 的开源项目</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../quick_start/usb_speed.html">USB 极限速度测试</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">USB 基本知识点</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../usb/usb2.0_basic.html">USB 基本概念(2.0 为主)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../usb/usb3.0_basic.html">USB 基本概念(3.0 为主)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../usb/usb_desc.html">USB 描述符</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../usb/usb_request.html">USB 设备请求</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../usb/usb_enum.html">USB 枚举</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../usb/usb_ext.html">USB 知识点拓展</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">API 手册</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../api/api_device.html">设备协议栈</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api/api_host.html">主机协议栈</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api/api_port.html">主从驱动</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api/api_config.html">USB CONFIG 说明</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Class 指南</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../class/class_cdc.html">CDC</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../class/class_hid.html">HID</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../class/class_msc.html">MSC</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../class/class_audio.html">UAC</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../class/class_video.html">UVC</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../class/winusb.html">WINUSB</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">例程</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="usbd_cdc_acm.html">CDC ACM Device</a></li>
+<li class="toctree-l1"><a class="reference internal" href="usbd_hid.html">HID Device</a></li>
+<li class="toctree-l1"><a class="reference internal" href="usbd_msc.html">MSC Device</a></li>
+<li class="toctree-l1"><a class="reference internal" href="usbd_audiov1.html">AudioV1 Device</a></li>
+<li class="toctree-l1"><a class="reference internal" href="usbd_audiov2.html">AudioV2 Device</a></li>
+<li class="toctree-l1"><a class="reference internal" href="usbd_video.html">USB Video Device</a></li>
+<li class="toctree-l1"><a class="reference internal" href="usbd_winusb.html">WinUSB Device</a></li>
+<li class="toctree-l1"><a class="reference internal" href="usbd_webusb.html">WebUSB Device</a></li>
+<li class="toctree-l1"><a class="reference internal" href="usbd_rndis.html">CDC RNDIS Device</a></li>
+<li class="toctree-l1"><a class="reference internal" href="usbd_ecm.html">CDC ECM Device</a></li>
+<li class="toctree-l1"><a class="reference internal" href="usbd_adb.html">ADB Device</a></li>
+<li class="toctree-l1"><a class="reference internal" href="usbd_mtp.html">MTP Device</a></li>
+<li class="toctree-l1"><a class="reference internal" href="usbh_serial.html">Serial Host</a></li>
+<li class="toctree-l1"><a class="reference internal" href="usbh_hid.html">HID Host</a></li>
+<li class="toctree-l1"><a class="reference internal" href="usbh_msc.html">MSC Host</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Network Host</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#usb">USB 网卡相关的宏和文件</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id1">USB 网卡对接过程</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#usb-lwip">USB 网卡 LWIP 配置宏相关注意事项</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id2">总结</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="usbh_bluetooth.html">BTBLE Host</a></li>
+<li class="toctree-l1"><a class="reference internal" href="usbh_wifi.html">WIFI Host</a></li>
+<li class="toctree-l1"><a class="reference internal" href="usbh_audio.html">Audio Host</a></li>
+<li class="toctree-l1"><a class="reference internal" href="usbh_video.html">Video Host</a></li>
+<li class="toctree-l1"><a class="reference internal" href="usb_otg.html">USB OTG</a></li>
+<li class="toctree-l1"><a class="reference internal" href="usbd_vendor.html">Vendor Device 驱动编写</a></li>
+<li class="toctree-l1"><a class="reference internal" href="usbh_vendor.html">Vendor Host 驱动编写</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">USBIP 介绍</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../usbip/ohci.html">OHCI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../usbip/ehci.html">EHCI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../usbip/xhci.html">XHCI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../usbip/chipidea.html">CHIPIDEA</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../usbip/dwc2.html">DWC2</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../usbip/musb.html">MUSB</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../usbip/fotg210.html">FOTG210</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../usbip/cdns2.html">CDNS2</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../usbip/cdns3.html">CDNS3</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../usbip/dwc3.html">DWC3</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">工具使用</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../tools/index.html">chryusb_configurator</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tools/index.html#usb-protocol-suite">力科 USB Protocol Suite</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tools/index.html#wireshark">Wireshark</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tools/index.html#audacity">Audacity</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Release Notes</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../version.html">版本说明</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">性能展示</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../show/index.html">性能展示</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">商业支持</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../support/index.html">商业支持</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">CherryUSB</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Network Host</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/demo/usbh_net.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="network-host">
+<h1>Network Host<a class="headerlink" href="#network-host" title="Link to this heading"></a></h1>
+<p>本节主要介绍 Host USB 网卡的使用，当前已经支持和测试以下 USB 网卡:</p>
+<ul class="simple">
+<li><p>4G 网卡：EC20(ECM/RNDIS)、手机（RNDIS）、SIMCOM7600(RNDIS)、ML307R(RNDIS)、AIR780(RNDIS)</p></li>
+</ul>
+<div class="admonition caution">
+<p class="admonition-title">Caution</p>
+<p>请注意，部分 4G 网卡默认不带自动拨号功能，请更换固件或者使用 AT 配置成自动拨号，否则无法获取 IP。</p>
+</div>
+<ul class="simple">
+<li><p>USB 以太网卡：ASIX AX88772，REALTEK RTL8152</p></li>
+<li><p>USB WIFI 网卡： 博流 BL616（RNDIS/ECM）</p></li>
+</ul>
+<section id="usb">
+<h2>USB 网卡相关的宏和文件<a class="headerlink" href="#usb" title="Link to this heading"></a></h2>
+<p>网卡相关的宏如下，主要用于根据不同的网络组件注册网卡驱动：</p>
+<div class="highlight-C notranslate"><div class="highlight"><pre><span></span><span class="c1">// #define CONFIG_USBHOST_PLATFORM_CDC_ECM</span>
+<span class="c1">// #define CONFIG_USBHOST_PLATFORM_CDC_RNDIS</span>
+<span class="c1">// #define CONFIG_USBHOST_PLATFORM_CDC_NCM</span>
+<span class="c1">// #define CONFIG_USBHOST_PLATFORM_ASIX</span>
+<span class="c1">// #define CONFIG_USBHOST_PLATFORM_RTL8152</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>如果使用了 Kconfig 系统，上述宏自定生成，其他平台请手动定义。</p>
+</div>
+<p>USB 网卡传输层面已经对接好了相关网络组件，列举如下：</p>
+<ul class="simple">
+<li><p>自定义 OS + LWIP 请使用 <strong>platform/lwip/usbh_lwip.c</strong>，需要自行包含该文件，并使能上述相关的宏。并在初始化 USB 之前调用 <cite>tcpip_init(NULL, NULL)</cite></p></li>
+<li><p>RT-THREAD + LWIP 请使用 <strong>platform/rtthread/usbh_lwip.c</strong>，在 Kconfig 中使能对应的网卡驱动后自动勾选该文件，勾选 rt-thread lwip以后自动调用 <cite>tcpip_init(NULL, NULL)</cite></p></li>
+<li><p>ESP-IDF + LWIP 请使用 <strong>platform/freertos/usbh_net.c</strong>，在 Kconfig 中使能对应的网卡驱动后自动勾选该文件，并且在初始化 USB 之前调用 <cite>esp_netif_init()</cite> + <cite>esp_event_loop_create_default()</cite></p></li>
+<li><p>NUTTX + NUTTX 网络组件 请使用 <strong>platform/nuttx/usbh_net.c</strong>，在 Kconfig 中使能对应的网卡驱动后自动勾选该文件，勾选网络组件以后自动调用</p></li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>如果是自行添加代码，别忘了添加  USB 网卡驱动相关的源文件，例如 <strong>class/usbh_cdc_ecm.c</strong>。所以我们推荐搭配对应平台使用哦，省去自己添加文件的麻烦</p>
+</div>
+</section>
+<section id="id1">
+<h2>USB 网卡对接过程<a class="headerlink" href="#id1" title="Link to this heading"></a></h2>
+<p>下面举例对接 LWIP 的对接过程。</p>
+<ul class="simple">
+<li><p>在 USB 网卡枚举完成以后，会 <strong>自动</strong> 调用 <cite>usbh_xxx_run</cite> 函数，此时注册 netif 驱动，并且开启 DHCP 客户端和获取 IP 的定时器。</p></li>
+</ul>
+<div class="highlight-C notranslate"><div class="highlight"><pre><span></span><span class="kt">void</span><span class="w"> </span><span class="nf">usbh_cdc_ecm_run</span><span class="p">(</span><span class="k">struct</span><span class="w"> </span><span class="nc">usbh_cdc_ecm</span><span class="w"> </span><span class="o">*</span><span class="n">cdc_ecm_class</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="k">struct</span><span class="w"> </span><span class="nc">netif</span><span class="w"> </span><span class="o">*</span><span class="n">netif</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">&amp;</span><span class="n">g_cdc_ecm_netif</span><span class="p">;</span>
+
+<span class="w">    </span><span class="n">netif</span><span class="o">-&gt;</span><span class="n">hwaddr_len</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">6</span><span class="p">;</span>
+<span class="w">    </span><span class="n">memcpy</span><span class="p">(</span><span class="n">netif</span><span class="o">-&gt;</span><span class="n">hwaddr</span><span class="p">,</span><span class="w"> </span><span class="n">cdc_ecm_class</span><span class="o">-&gt;</span><span class="n">mac</span><span class="p">,</span><span class="w"> </span><span class="mi">6</span><span class="p">);</span>
+
+<span class="w">    </span><span class="n">IP4_ADDR</span><span class="p">(</span><span class="o">&amp;</span><span class="n">g_ipaddr</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">);</span>
+<span class="w">    </span><span class="n">IP4_ADDR</span><span class="p">(</span><span class="o">&amp;</span><span class="n">g_netmask</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">);</span>
+<span class="w">    </span><span class="n">IP4_ADDR</span><span class="p">(</span><span class="o">&amp;</span><span class="n">g_gateway</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">);</span>
+
+<span class="w">    </span><span class="n">netif</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">netif_add</span><span class="p">(</span><span class="n">netif</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">g_ipaddr</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">g_netmask</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">g_gateway</span><span class="p">,</span><span class="w"> </span><span class="nb">NULL</span><span class="p">,</span><span class="w"> </span><span class="n">usbh_cdc_ecm_if_init</span><span class="p">,</span><span class="w"> </span><span class="n">tcpip_input</span><span class="p">);</span>
+<span class="w">    </span><span class="n">netif_set_default</span><span class="p">(</span><span class="n">netif</span><span class="p">);</span>
+<span class="w">    </span><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="n">netif_is_up</span><span class="p">(</span><span class="n">netif</span><span class="p">))</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="n">dhcp_handle</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">usb_osal_timer_create</span><span class="p">(</span><span class="s">&quot;dhcp&quot;</span><span class="p">,</span><span class="w"> </span><span class="mi">200</span><span class="p">,</span><span class="w"> </span><span class="n">dhcp_timeout</span><span class="p">,</span><span class="w"> </span><span class="n">netif</span><span class="p">,</span><span class="w"> </span><span class="nb">true</span><span class="p">);</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">dhcp_handle</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="nb">NULL</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">USB_LOG_ERR</span><span class="p">(</span><span class="s">&quot;timer creation failed! </span><span class="se">\r\n</span><span class="s">&quot;</span><span class="p">);</span>
+<span class="w">        </span><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="n">usb_osal_thread_create</span><span class="p">(</span><span class="s">&quot;usbh_cdc_ecm_rx&quot;</span><span class="p">,</span><span class="w"> </span><span class="mi">2048</span><span class="p">,</span><span class="w"> </span><span class="n">CONFIG_USBHOST_PSC_PRIO</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">usbh_cdc_ecm_rx_thread</span><span class="p">,</span><span class="w"> </span><span class="nb">NULL</span><span class="p">);</span>
+<span class="cp">#if LWIP_DHCP</span>
+<span class="w">    </span><span class="n">dhcp_start</span><span class="p">(</span><span class="n">netif</span><span class="p">);</span>
+<span class="w">    </span><span class="n">usb_osal_timer_start</span><span class="p">(</span><span class="n">dhcp_handle</span><span class="p">);</span>
+<span class="cp">#endif</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p><cite>usbh_lwip_eth_output_common</cite> 用于将发送 pbuf 组装成 USB 网卡数据包</p></li>
+<li><p><cite>usbh_lwip_eth_input_common</cite> 用于将 USB 网卡数据组装成 pbuf</p></li>
+<li><p>实际网卡发送和接收处理</p></li>
+</ul>
+<div class="highlight-C notranslate"><div class="highlight"><pre><span></span><span class="k">static</span><span class="w"> </span><span class="n">err_t</span><span class="w"> </span><span class="nf">usbh_cdc_ecm_linkoutput</span><span class="p">(</span><span class="k">struct</span><span class="w"> </span><span class="nc">netif</span><span class="w"> </span><span class="o">*</span><span class="n">netif</span><span class="p">,</span><span class="w"> </span><span class="k">struct</span><span class="w"> </span><span class="nc">pbuf</span><span class="w"> </span><span class="o">*</span><span class="n">p</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">ret</span><span class="p">;</span>
+<span class="w">    </span><span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="n">netif</span><span class="p">;</span>
+
+<span class="w">    </span><span class="n">usbh_lwip_eth_output_common</span><span class="p">(</span><span class="n">p</span><span class="p">,</span><span class="w"> </span><span class="n">usbh_cdc_ecm_get_eth_txbuf</span><span class="p">());</span>
+<span class="w">    </span><span class="n">ret</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">usbh_cdc_ecm_eth_output</span><span class="p">(</span><span class="n">p</span><span class="o">-&gt;</span><span class="n">tot_len</span><span class="p">);</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">ret</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">ERR_BUF</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">ERR_OK</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kt">void</span><span class="w"> </span><span class="nf">usbh_cdc_ecm_eth_input</span><span class="p">(</span><span class="kt">uint8_t</span><span class="w"> </span><span class="o">*</span><span class="n">buf</span><span class="p">,</span><span class="w"> </span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">buflen</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="n">usbh_lwip_eth_input_common</span><span class="p">(</span><span class="o">&amp;</span><span class="n">g_cdc_ecm_netif</span><span class="p">,</span><span class="w"> </span><span class="n">buf</span><span class="p">,</span><span class="w"> </span><span class="n">buflen</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>USB 网卡 拔出以后会 <strong>自动</strong> 调用 <cite>usbh_xxx_stop</cite> 函数，此时需要停止 DHCP 客户端，删除定时器，并且移除 netif。</p></li>
+</ul>
+<div class="highlight-C notranslate"><div class="highlight"><pre><span></span><span class="kt">void</span><span class="w"> </span><span class="nf">usbh_cdc_ecm_stop</span><span class="p">(</span><span class="k">struct</span><span class="w"> </span><span class="nc">usbh_cdc_ecm</span><span class="w"> </span><span class="o">*</span><span class="n">cdc_ecm_class</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="k">struct</span><span class="w"> </span><span class="nc">netif</span><span class="w"> </span><span class="o">*</span><span class="n">netif</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">&amp;</span><span class="n">g_cdc_ecm_netif</span><span class="p">;</span>
+<span class="w">    </span><span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="n">cdc_ecm_class</span><span class="p">;</span>
+
+<span class="cp">#if LWIP_DHCP</span>
+<span class="w">    </span><span class="n">dhcp_stop</span><span class="p">(</span><span class="n">netif</span><span class="p">);</span>
+<span class="w">    </span><span class="n">dhcp_cleanup</span><span class="p">(</span><span class="n">netif</span><span class="p">);</span>
+<span class="w">    </span><span class="n">usb_osal_timer_delete</span><span class="p">(</span><span class="n">dhcp_handle</span><span class="p">);</span>
+<span class="cp">#endif</span>
+<span class="w">    </span><span class="n">netif_set_down</span><span class="p">(</span><span class="n">netif</span><span class="p">);</span>
+<span class="w">    </span><span class="n">netif_remove</span><span class="p">(</span><span class="n">netif</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>因为 USB 网卡内部已经对接了LWIP，因此用户可以直接使用 LWIP 的 API，无需关心 USB 的实现。</p></li>
+</ul>
+</section>
+<section id="usb-lwip">
+<h2>USB 网卡 LWIP 配置宏相关注意事项<a class="headerlink" href="#usb-lwip" title="Link to this heading"></a></h2>
+<p><strong>LWIP_TCPIP_CORE_LOCKING_INPUT</strong> 用于不使用 lwip 内置的 tcpip 线程，而使用 USB 自己的接收处理线程。</p>
+<p><strong>LWIP_TCPIP_CORE_LOCKING</strong> 在现在 lwip 版本中默认是打开的，也推荐必须打开。</p>
+<p><strong>PBUF_POOL_BUFSIZE</strong> 推荐大于1600，搭配 LWIP_TCPIP_CORE_LOCKING_INPUT 使用，因为我们提供了使用 zero mempy 的方式，使用静态 pbuf，而不是把数据 copy 到 pbuf 中。</p>
+<p><strong>TCPIP_THREAD_STACKSIZE</strong> 推荐大于 1K，防止栈溢出。</p>
+<div class="highlight-C notranslate"><div class="highlight"><pre><span></span><span class="cp">#if LWIP_TCPIP_CORE_LOCKING_INPUT != 1</span>
+<span class="cp">#warning suggest you to set LWIP_TCPIP_CORE_LOCKING_INPUT to 1, usb handles eth input with own thread</span>
+<span class="cp">#endif</span>
+
+<span class="cp">#if LWIP_TCPIP_CORE_LOCKING != 1</span>
+<span class="cp">#error must set LWIP_TCPIP_CORE_LOCKING to 1</span>
+<span class="cp">#endif</span>
+
+<span class="cp">#if PBUF_POOL_BUFSIZE &lt; 1600</span>
+<span class="cp">#error PBUF_POOL_BUFSIZE must be larger than 1600</span>
+<span class="cp">#endif</span>
+
+<span class="cp">#if TCPIP_THREAD_STACKSIZE &lt; 1024</span>
+<span class="cp">#error TCPIP_THREAD_STACKSIZE must be &gt;= 1024</span>
+<span class="cp">#endif</span>
+</pre></div>
+</div>
+</section>
+<section id="id2">
+<h2>总结<a class="headerlink" href="#id2" title="Link to this heading"></a></h2>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>通过以上内容，我们可以看到 CherryUSB 对 USB 网卡的支持是非常完善的，用户只需要使能对应的宏或者勾选，就可以实现 USB 网卡的自动识别和驱动注册，无需手动初始化网卡相关配置，用户只需关注应用层，极大地方便了用户的使用。</p>
+</div>
+<p>具体移植文章可以参考开发者的一些笔记 <a class="reference external" href="https://club.rt-thread.org/ask/article/5cf3e9e0b2d95800.html">https://club.rt-thread.org/ask/article/5cf3e9e0b2d95800.html</a></p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="usbh_msc.html" class="btn btn-neutral float-left" title="MSC Host" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="usbh_bluetooth.html" class="btn btn-neutral float-right" title="BTBLE Host" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022 ~ 2026, sakumisu.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

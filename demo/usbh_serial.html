@@ -1,0 +1,390 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Serial Host &mdash; CherryUSB 1.6.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=9edc463e" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=d6a008b6"></script>
+      <script src="../_static/doctools.js?v=9a2dae69"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="HID Host" href="usbh_hid.html" />
+    <link rel="prev" title="MTP Device" href="usbd_mtp.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            CherryUSB
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">快速上手</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../quick_start/start.html">入门必看</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../quick_start/demo.html">基于现有 demo 快速验证</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../quick_start/transplant.html">芯片通用移植指南</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../quick_start/rtthread.html">基于 RT-Thread 软件包开发指南</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../quick_start/q%26a.html">Q &amp; A</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../quick_start/migration.html">部分改动迁移指南</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../quick_start/opensource.html">基于 CherryUSB 的开源项目</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../quick_start/usb_speed.html">USB 极限速度测试</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">USB 基本知识点</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../usb/usb2.0_basic.html">USB 基本概念(2.0 为主)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../usb/usb3.0_basic.html">USB 基本概念(3.0 为主)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../usb/usb_desc.html">USB 描述符</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../usb/usb_request.html">USB 设备请求</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../usb/usb_enum.html">USB 枚举</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../usb/usb_ext.html">USB 知识点拓展</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">API 手册</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../api/api_device.html">设备协议栈</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api/api_host.html">主机协议栈</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api/api_port.html">主从驱动</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api/api_config.html">USB CONFIG 说明</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Class 指南</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../class/class_cdc.html">CDC</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../class/class_hid.html">HID</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../class/class_msc.html">MSC</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../class/class_audio.html">UAC</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../class/class_video.html">UVC</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../class/winusb.html">WINUSB</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">例程</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="usbd_cdc_acm.html">CDC ACM Device</a></li>
+<li class="toctree-l1"><a class="reference internal" href="usbd_hid.html">HID Device</a></li>
+<li class="toctree-l1"><a class="reference internal" href="usbd_msc.html">MSC Device</a></li>
+<li class="toctree-l1"><a class="reference internal" href="usbd_audiov1.html">AudioV1 Device</a></li>
+<li class="toctree-l1"><a class="reference internal" href="usbd_audiov2.html">AudioV2 Device</a></li>
+<li class="toctree-l1"><a class="reference internal" href="usbd_video.html">USB Video Device</a></li>
+<li class="toctree-l1"><a class="reference internal" href="usbd_winusb.html">WinUSB Device</a></li>
+<li class="toctree-l1"><a class="reference internal" href="usbd_webusb.html">WebUSB Device</a></li>
+<li class="toctree-l1"><a class="reference internal" href="usbd_rndis.html">CDC RNDIS Device</a></li>
+<li class="toctree-l1"><a class="reference internal" href="usbd_ecm.html">CDC ECM Device</a></li>
+<li class="toctree-l1"><a class="reference internal" href="usbd_adb.html">ADB Device</a></li>
+<li class="toctree-l1"><a class="reference internal" href="usbd_mtp.html">MTP Device</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Serial Host</a></li>
+<li class="toctree-l1"><a class="reference internal" href="usbh_hid.html">HID Host</a></li>
+<li class="toctree-l1"><a class="reference internal" href="usbh_msc.html">MSC Host</a></li>
+<li class="toctree-l1"><a class="reference internal" href="usbh_net.html">Network Host</a></li>
+<li class="toctree-l1"><a class="reference internal" href="usbh_bluetooth.html">BTBLE Host</a></li>
+<li class="toctree-l1"><a class="reference internal" href="usbh_wifi.html">WIFI Host</a></li>
+<li class="toctree-l1"><a class="reference internal" href="usbh_audio.html">Audio Host</a></li>
+<li class="toctree-l1"><a class="reference internal" href="usbh_video.html">Video Host</a></li>
+<li class="toctree-l1"><a class="reference internal" href="usb_otg.html">USB OTG</a></li>
+<li class="toctree-l1"><a class="reference internal" href="usbd_vendor.html">Vendor Device 驱动编写</a></li>
+<li class="toctree-l1"><a class="reference internal" href="usbh_vendor.html">Vendor Host 驱动编写</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">USBIP 介绍</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../usbip/ohci.html">OHCI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../usbip/ehci.html">EHCI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../usbip/xhci.html">XHCI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../usbip/chipidea.html">CHIPIDEA</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../usbip/dwc2.html">DWC2</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../usbip/musb.html">MUSB</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../usbip/fotg210.html">FOTG210</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../usbip/cdns2.html">CDNS2</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../usbip/cdns3.html">CDNS3</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../usbip/dwc3.html">DWC3</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">工具使用</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../tools/index.html">chryusb_configurator</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tools/index.html#usb-protocol-suite">力科 USB Protocol Suite</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tools/index.html#wireshark">Wireshark</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tools/index.html#audacity">Audacity</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Release Notes</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../version.html">版本说明</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">性能展示</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../show/index.html">性能展示</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">商业支持</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../support/index.html">商业支持</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">CherryUSB</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Serial Host</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/demo/usbh_serial.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="serial-host">
+<h1>Serial Host<a class="headerlink" href="#serial-host" title="Link to this heading"></a></h1>
+<p>本节主要介绍 Host serial 框架的使用。Serial 框架当前支持 cdc acm, ftdi, cp210x, ch34x, pl2303，gsm 驱动。</p>
+<figure class="align-default">
+<img alt="../_images/usbh_serial.png" src="../_images/usbh_serial.png" />
+</figure>
+<p>当前支持两种使用方式，一种是使用源生 CherryUSB usbhost serial API 进行操作，另一种是基于平台封装的 API 操作，比如 rt-thread device API，nuttx posix API。</p>
+<p>下面演示的是使用 CherryUSB usbhost serial API 进行串口回环测试，并且使用阻塞发送，异步读取的方式：</p>
+<div class="highlight-C notranslate"><div class="highlight"><pre><span></span><span class="k">struct</span><span class="w"> </span><span class="nc">usbh_serial</span><span class="w"> </span><span class="o">*</span><span class="n">serial</span><span class="p">;</span>
+
+<span class="n">serial</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">usbh_serial_open</span><span class="p">(</span><span class="s">&quot;/dev/ttyACM0&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">USBH_SERIAL_O_RDWR</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">USBH_SERIAL_O_NONBLOCK</span><span class="p">);</span>
+<span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">serial</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="nb">NULL</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">serial</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">usbh_serial_open</span><span class="p">(</span><span class="s">&quot;/dev/ttyUSB0&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">USBH_SERIAL_O_RDWR</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">USBH_SERIAL_O_NONBLOCK</span><span class="p">);</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">serial</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="nb">NULL</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">USB_LOG_RAW</span><span class="p">(</span><span class="s">&quot;no serial device found</span><span class="se">\r\n</span><span class="s">&quot;</span><span class="p">);</span>
+<span class="w">        </span><span class="k">goto</span><span class="w"> </span><span class="n">delete</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+
+<span class="k">struct</span><span class="w"> </span><span class="nc">usbh_serial_termios</span><span class="w"> </span><span class="n">termios</span><span class="p">;</span>
+
+<span class="n">memset</span><span class="p">(</span><span class="o">&amp;</span><span class="n">termios</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="k">sizeof</span><span class="p">(</span><span class="n">termios</span><span class="p">));</span>
+<span class="n">termios</span><span class="p">.</span><span class="n">baudrate</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">115200</span><span class="p">;</span>
+<span class="n">termios</span><span class="p">.</span><span class="n">stopbits</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="n">termios</span><span class="p">.</span><span class="n">parity</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="n">termios</span><span class="p">.</span><span class="n">databits</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="p">;</span>
+<span class="n">termios</span><span class="p">.</span><span class="n">rtscts</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">false</span><span class="p">;</span>
+<span class="n">termios</span><span class="p">.</span><span class="n">rx_timeout</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="n">ret</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">usbh_serial_control</span><span class="p">(</span><span class="n">serial</span><span class="p">,</span><span class="w"> </span><span class="n">USBH_SERIAL_CMD_SET_ATTR</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">termios</span><span class="p">);</span>
+<span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">ret</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">USB_LOG_RAW</span><span class="p">(</span><span class="s">&quot;set serial attr error, ret:%d</span><span class="se">\r\n</span><span class="s">&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">ret</span><span class="p">);</span>
+<span class="w">    </span><span class="k">goto</span><span class="w"> </span><span class="n">delete_with_close</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="n">serial_tx_bytes</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">ret</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">usbh_serial_write</span><span class="p">(</span><span class="n">serial</span><span class="p">,</span><span class="w"> </span><span class="n">serial_tx_buffer</span><span class="p">,</span><span class="w"> </span><span class="k">sizeof</span><span class="p">(</span><span class="n">serial_tx_buffer</span><span class="p">));</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">ret</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">USB_LOG_RAW</span><span class="p">(</span><span class="s">&quot;serial write error, ret:%d</span><span class="se">\r\n</span><span class="s">&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">ret</span><span class="p">);</span>
+<span class="w">        </span><span class="k">goto</span><span class="w"> </span><span class="n">delete_with_close</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">serial_tx_bytes</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="n">ret</span><span class="p">;</span>
+
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">serial_tx_bytes</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">SERIAL_TEST_LEN</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="n">USB_LOG_RAW</span><span class="p">(</span><span class="s">&quot;send over</span><span class="se">\r\n</span><span class="s">&quot;</span><span class="p">);</span>
+<span class="w">            </span><span class="k">break</span><span class="p">;</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+
+<span class="k">volatile</span><span class="w"> </span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">wait_timeout</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="n">serial_rx_bytes</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">ret</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">usbh_serial_read</span><span class="p">(</span><span class="n">serial</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">serial_rx_data</span><span class="p">[</span><span class="n">serial_rx_bytes</span><span class="p">],</span><span class="w"> </span><span class="n">SERIAL_TEST_LEN</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">serial_rx_bytes</span><span class="p">);</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">ret</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">USB_LOG_RAW</span><span class="p">(</span><span class="s">&quot;serial read error, ret:%d</span><span class="se">\r\n</span><span class="s">&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">ret</span><span class="p">);</span>
+<span class="w">        </span><span class="k">goto</span><span class="w"> </span><span class="n">delete_with_close</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">serial_rx_bytes</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="n">ret</span><span class="p">;</span>
+
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">serial_rx_bytes</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">SERIAL_TEST_LEN</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="n">USB_LOG_RAW</span><span class="p">(</span><span class="s">&quot;receive over</span><span class="se">\r\n</span><span class="s">&quot;</span><span class="p">);</span>
+<span class="w">            </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">SERIAL_TEST_LEN</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">serial_rx_data</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="mh">0xa5</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                    </span><span class="n">USB_LOG_RAW</span><span class="p">(</span><span class="s">&quot;serial loopback data error at index %d, data: 0x%02x</span><span class="se">\r\n</span><span class="s">&quot;</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="kt">unsigned</span><span class="w"> </span><span class="kt">int</span><span class="p">)</span><span class="n">i</span><span class="p">,</span><span class="w"> </span><span class="n">serial_rx_data</span><span class="p">[</span><span class="n">i</span><span class="p">]);</span>
+<span class="w">                    </span><span class="k">goto</span><span class="w"> </span><span class="n">delete_with_close</span><span class="p">;</span>
+<span class="w">                </span><span class="p">}</span>
+<span class="w">            </span><span class="p">}</span>
+<span class="w">            </span><span class="n">serial_test_success</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">true</span><span class="p">;</span>
+<span class="w">            </span><span class="k">break</span><span class="p">;</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="n">wait_timeout</span><span class="o">++</span><span class="p">;</span>
+
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">wait_timeout</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">500</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="c1">// 5s</span>
+<span class="w">        </span><span class="n">USB_LOG_RAW</span><span class="p">(</span><span class="s">&quot;serial read timeout</span><span class="se">\r\n</span><span class="s">&quot;</span><span class="p">);</span>
+<span class="w">        </span><span class="k">goto</span><span class="w"> </span><span class="n">delete_with_close</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="n">usb_osal_msleep</span><span class="p">(</span><span class="mi">10</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="n">usbh_serial_close</span><span class="p">(</span><span class="n">serial</span><span class="p">);</span>
+</pre></div>
+</div>
+<div class="admonition caution">
+<p class="admonition-title">Caution</p>
+<p>需要注意，例程中使用的是比较简单的先发送后读取的方式，因此发送的总长度不可以超过 CONFIG_USBHOST_SERIAL_RX_SIZE，正常使用 TX/RX 请分开进行。</p>
+</div>
+<p>用户需要考虑以下三种场景：</p>
+<ul class="simple">
+<li><p>USB2TTL 设备 + 启用了波特率（USB2TTL设备必须启用波特率），这种情况下需要使用 <cite>usbh_serial_write</cite> 和 <cite>usbh_serial_read</cite> 进行收发数据， <strong>并且 read 操作需要及时，防止 ringbuf 数据溢出而丢包</strong>。不可以使用 <cite>usbh_serial_cdc_write_async</cite> 和 <cite>usbh_serial_cdc_read_async</cite></p></li>
+<li><p>纯 USB 设备 + 未启动波特率，这种情况下可以使用 <cite>usbh_serial_cdc_write_async</cite> 和 <cite>usbh_serial_cdc_read_async</cite> 进行异步收发数据。阻塞则可以用 <cite>usbh_serial_write</cite> ，不可以使用 <cite>usbh_serial_read</cite>。</p></li>
+<li><p>纯 USB 设备 + 启动波特率，同 1，但是接收速率会打折扣（因为多了一层 ringbuf）。此时也不可以使用 <cite>usbh_serial_cdc_write_async</cite> 和 <cite>usbh_serial_cdc_read_async</cite>。 <strong>如果是 GSM 设备请使用第一种场景</strong>。</p></li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>简单来说就是，如果接收数据需要用到ringbuf转一层的，请使用第一种场景。</p>
+</div>
+<div class="highlight-C notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">I</span><span class="o">/</span><span class="n">usbh_hub</span><span class="p">]</span><span class="w"> </span><span class="n">New</span><span class="w"> </span><span class="n">full</span><span class="o">-</span><span class="n">speed</span><span class="w"> </span><span class="n">device</span><span class="w"> </span><span class="n">on</span><span class="w"> </span><span class="n">Bus</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="n">Hub</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">Port</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="n">connected</span>
+<span class="p">[</span><span class="n">I</span><span class="o">/</span><span class="n">usbh_core</span><span class="p">]</span><span class="w"> </span><span class="n">New</span><span class="w"> </span><span class="n">device</span><span class="w"> </span><span class="n">found</span><span class="p">,</span><span class="n">idVendor</span><span class="o">:</span><span class="mi">10</span><span class="n">c4</span><span class="p">,</span><span class="n">idProduct</span><span class="o">:</span><span class="n">ea60</span><span class="p">,</span><span class="n">bcdDevice</span><span class="o">:</span><span class="mo">0100</span>
+<span class="p">[</span><span class="n">I</span><span class="o">/</span><span class="n">usbh_core</span><span class="p">]</span><span class="w"> </span><span class="n">The</span><span class="w"> </span><span class="n">device</span><span class="w"> </span><span class="n">has</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="n">bNumConfigurations</span>
+<span class="p">[</span><span class="n">I</span><span class="o">/</span><span class="n">usbh_core</span><span class="p">]</span><span class="w"> </span><span class="n">The</span><span class="w"> </span><span class="n">device</span><span class="w"> </span><span class="n">has</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="n">interfaces</span>
+<span class="p">[</span><span class="n">I</span><span class="o">/</span><span class="n">usbh_core</span><span class="p">]</span><span class="w"> </span><span class="n">Enumeration</span><span class="w"> </span><span class="n">success</span><span class="p">,</span><span class="w"> </span><span class="n">start</span><span class="w"> </span><span class="n">loading</span><span class="w"> </span><span class="n">class</span><span class="w"> </span><span class="n">driver</span>
+<span class="p">[</span><span class="n">I</span><span class="o">/</span><span class="n">usbh_core</span><span class="p">]</span><span class="w"> </span><span class="n">Loading</span><span class="w"> </span><span class="n">cp210x</span><span class="w"> </span><span class="n">class</span><span class="w"> </span><span class="n">driver</span><span class="w"> </span><span class="n">on</span><span class="w"> </span><span class="n">interface</span><span class="w"> </span><span class="mi">0</span>
+<span class="p">[</span><span class="n">I</span><span class="o">/</span><span class="n">usbh_cp210x</span><span class="p">]</span><span class="w"> </span><span class="n">chip</span><span class="w"> </span><span class="n">partnum</span><span class="o">:</span><span class="w"> </span><span class="mh">0x02</span>
+<span class="p">[</span><span class="n">I</span><span class="o">/</span><span class="n">usbh_cp210x</span><span class="p">]</span><span class="w"> </span><span class="n">ulAmountInInQueue</span><span class="o">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="n">ulAmountInOutQueue</span><span class="o">:</span><span class="w"> </span><span class="mi">0</span>
+<span class="p">[</span><span class="n">I</span><span class="o">/</span><span class="n">usbh_serial</span><span class="p">]</span><span class="w"> </span><span class="n">Ep</span><span class="o">=</span><span class="mi">81</span><span class="w"> </span><span class="n">Attr</span><span class="o">=</span><span class="mo">02</span><span class="w"> </span><span class="n">Mps</span><span class="o">=</span><span class="mi">64</span><span class="w"> </span><span class="n">Interval</span><span class="o">=</span><span class="mo">00</span><span class="w"> </span><span class="n">Mult</span><span class="o">=</span><span class="mo">00</span>
+<span class="p">[</span><span class="n">I</span><span class="o">/</span><span class="n">usbh_serial</span><span class="p">]</span><span class="w"> </span><span class="n">Ep</span><span class="o">=</span><span class="mo">01</span><span class="w"> </span><span class="n">Attr</span><span class="o">=</span><span class="mo">02</span><span class="w"> </span><span class="n">Mps</span><span class="o">=</span><span class="mi">64</span><span class="w"> </span><span class="n">Interval</span><span class="o">=</span><span class="mo">00</span><span class="w"> </span><span class="n">Mult</span><span class="o">=</span><span class="mo">00</span>
+<span class="p">[</span><span class="n">I</span><span class="o">/</span><span class="n">usbh_serial</span><span class="p">]</span><span class="w"> </span><span class="n">Register</span><span class="w"> </span><span class="n">Serial</span><span class="w"> </span><span class="n">Class</span><span class="o">:</span><span class="w"> </span><span class="o">/</span><span class="n">dev</span><span class="o">/</span><span class="n">ttyUSB0</span><span class="w"> </span><span class="p">(</span><span class="n">cp210x</span><span class="p">)</span>
+<span class="n">start</span><span class="w"> </span><span class="n">serial</span><span class="w"> </span><span class="n">loopback</span><span class="w"> </span><span class="n">test</span><span class="p">,</span><span class="w"> </span><span class="n">len</span><span class="o">:</span><span class="w"> </span><span class="mi">1024</span>
+<span class="n">send</span><span class="w"> </span><span class="n">over</span>
+<span class="n">receive</span><span class="w"> </span><span class="n">over</span>
+<span class="n">serial</span><span class="w"> </span><span class="n">loopback</span><span class="w"> </span><span class="n">test</span><span class="w"> </span><span class="n">success</span>
+<span class="p">[</span><span class="n">I</span><span class="o">/</span><span class="n">usbh_serial</span><span class="p">]</span><span class="w"> </span><span class="n">Unregister</span><span class="w"> </span><span class="n">Serial</span><span class="w"> </span><span class="n">Class</span><span class="o">:</span><span class="w"> </span><span class="o">/</span><span class="n">dev</span><span class="o">/</span><span class="n">ttyUSB0</span><span class="w"> </span><span class="p">(</span><span class="n">cp210x</span><span class="p">)</span>
+<span class="p">[</span><span class="n">I</span><span class="o">/</span><span class="n">usbh_core</span><span class="p">]</span><span class="w"> </span><span class="n">Device</span><span class="w"> </span><span class="n">on</span><span class="w"> </span><span class="n">Bus</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="n">Hub</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">Port</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="n">disconnected</span>
+<span class="p">[</span><span class="n">I</span><span class="o">/</span><span class="n">usbh_hub</span><span class="p">]</span><span class="w"> </span><span class="n">New</span><span class="w"> </span><span class="n">high</span><span class="o">-</span><span class="n">speed</span><span class="w"> </span><span class="n">device</span><span class="w"> </span><span class="n">on</span><span class="w"> </span><span class="n">Bus</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="n">Hub</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">Port</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="n">connected</span>
+<span class="p">[</span><span class="n">I</span><span class="o">/</span><span class="n">usbh_core</span><span class="p">]</span><span class="w"> </span><span class="n">New</span><span class="w"> </span><span class="n">device</span><span class="w"> </span><span class="n">found</span><span class="p">,</span><span class="n">idVendor</span><span class="o">:</span><span class="mo">0403</span><span class="p">,</span><span class="n">idProduct</span><span class="o">:</span><span class="mi">6010</span><span class="p">,</span><span class="n">bcdDevice</span><span class="o">:</span><span class="mo">0700</span>
+<span class="p">[</span><span class="n">I</span><span class="o">/</span><span class="n">usbh_core</span><span class="p">]</span><span class="w"> </span><span class="n">The</span><span class="w"> </span><span class="n">device</span><span class="w"> </span><span class="n">has</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="n">bNumConfigurations</span>
+<span class="p">[</span><span class="n">I</span><span class="o">/</span><span class="n">usbh_core</span><span class="p">]</span><span class="w"> </span><span class="n">The</span><span class="w"> </span><span class="n">device</span><span class="w"> </span><span class="n">has</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="n">interfaces</span>
+<span class="p">[</span><span class="n">I</span><span class="o">/</span><span class="n">usbh_core</span><span class="p">]</span><span class="w"> </span><span class="n">Enumeration</span><span class="w"> </span><span class="n">success</span><span class="p">,</span><span class="w"> </span><span class="n">start</span><span class="w"> </span><span class="n">loading</span><span class="w"> </span><span class="n">class</span><span class="w"> </span><span class="n">driver</span>
+<span class="p">[</span><span class="n">I</span><span class="o">/</span><span class="n">usbh_core</span><span class="p">]</span><span class="w"> </span><span class="n">Loading</span><span class="w"> </span><span class="n">ftdi</span><span class="w"> </span><span class="n">class</span><span class="w"> </span><span class="n">driver</span><span class="w"> </span><span class="n">on</span><span class="w"> </span><span class="n">interface</span><span class="w"> </span><span class="mi">0</span>
+<span class="p">[</span><span class="n">I</span><span class="o">/</span><span class="n">usbh_ftdi</span><span class="p">]</span><span class="w"> </span><span class="n">chip</span><span class="w"> </span><span class="n">name</span><span class="o">:</span><span class="w"> </span><span class="n">FT2232H</span>
+<span class="p">[</span><span class="n">I</span><span class="o">/</span><span class="n">usbh_serial</span><span class="p">]</span><span class="w"> </span><span class="n">Ep</span><span class="o">=</span><span class="mi">81</span><span class="w"> </span><span class="n">Attr</span><span class="o">=</span><span class="mo">02</span><span class="w"> </span><span class="n">Mps</span><span class="o">=</span><span class="mi">512</span><span class="w"> </span><span class="n">Interval</span><span class="o">=</span><span class="mo">00</span><span class="w"> </span><span class="n">Mult</span><span class="o">=</span><span class="mo">00</span>
+<span class="p">[</span><span class="n">I</span><span class="o">/</span><span class="n">usbh_serial</span><span class="p">]</span><span class="w"> </span><span class="n">Ep</span><span class="o">=</span><span class="mo">02</span><span class="w"> </span><span class="n">Attr</span><span class="o">=</span><span class="mo">02</span><span class="w"> </span><span class="n">Mps</span><span class="o">=</span><span class="mi">512</span><span class="w"> </span><span class="n">Interval</span><span class="o">=</span><span class="mo">00</span><span class="w"> </span><span class="n">Mult</span><span class="o">=</span><span class="mo">00</span>
+<span class="p">[</span><span class="n">I</span><span class="o">/</span><span class="n">usbh_serial</span><span class="p">]</span><span class="w"> </span><span class="n">Register</span><span class="w"> </span><span class="n">Serial</span><span class="w"> </span><span class="n">Class</span><span class="o">:</span><span class="w"> </span><span class="o">/</span><span class="n">dev</span><span class="o">/</span><span class="n">ttyUSB0</span><span class="w"> </span><span class="p">(</span><span class="n">ftdi</span><span class="p">)</span>
+<span class="p">[</span><span class="n">I</span><span class="o">/</span><span class="n">usbh_core</span><span class="p">]</span><span class="w"> </span><span class="n">Loading</span><span class="w"> </span><span class="n">ftdi</span><span class="w"> </span><span class="n">class</span><span class="w"> </span><span class="n">driver</span><span class="w"> </span><span class="n">on</span><span class="w"> </span><span class="n">interface</span><span class="w"> </span><span class="mi">1</span>
+<span class="p">[</span><span class="n">I</span><span class="o">/</span><span class="n">usbh_ftdi</span><span class="p">]</span><span class="w"> </span><span class="n">chip</span><span class="w"> </span><span class="n">name</span><span class="o">:</span><span class="w"> </span><span class="n">FT2232H</span>
+<span class="p">[</span><span class="n">I</span><span class="o">/</span><span class="n">usbh_serial</span><span class="p">]</span><span class="w"> </span><span class="n">Ep</span><span class="o">=</span><span class="mi">83</span><span class="w"> </span><span class="n">Attr</span><span class="o">=</span><span class="mo">02</span><span class="w"> </span><span class="n">Mps</span><span class="o">=</span><span class="mi">512</span><span class="w"> </span><span class="n">Interval</span><span class="o">=</span><span class="mo">00</span><span class="w"> </span><span class="n">Mult</span><span class="o">=</span><span class="mo">00</span>
+<span class="p">[</span><span class="n">I</span><span class="o">/</span><span class="n">usbh_serial</span><span class="p">]</span><span class="w"> </span><span class="n">Ep</span><span class="o">=</span><span class="mo">04</span><span class="w"> </span><span class="n">Attr</span><span class="o">=</span><span class="mo">02</span><span class="w"> </span><span class="n">Mps</span><span class="o">=</span><span class="mi">512</span><span class="w"> </span><span class="n">Interval</span><span class="o">=</span><span class="mo">00</span><span class="w"> </span><span class="n">Mult</span><span class="o">=</span><span class="mo">00</span>
+<span class="p">[</span><span class="n">I</span><span class="o">/</span><span class="n">usbh_serial</span><span class="p">]</span><span class="w"> </span><span class="n">Register</span><span class="w"> </span><span class="n">Serial</span><span class="w"> </span><span class="n">Class</span><span class="o">:</span><span class="w"> </span><span class="o">/</span><span class="n">dev</span><span class="o">/</span><span class="n">ttyUSB1</span><span class="w"> </span><span class="p">(</span><span class="n">ftdi</span><span class="p">)</span>
+<span class="n">start</span><span class="w"> </span><span class="n">serial</span><span class="w"> </span><span class="n">loopback</span><span class="w"> </span><span class="n">test</span><span class="p">,</span><span class="w"> </span><span class="n">len</span><span class="o">:</span><span class="w"> </span><span class="mi">1024</span>
+<span class="n">send</span><span class="w"> </span><span class="n">over</span>
+<span class="n">receive</span><span class="w"> </span><span class="n">over</span>
+<span class="n">serial</span><span class="w"> </span><span class="n">loopback</span><span class="w"> </span><span class="n">test</span><span class="w"> </span><span class="n">success</span>
+<span class="p">[</span><span class="n">I</span><span class="o">/</span><span class="n">usbh_serial</span><span class="p">]</span><span class="w"> </span><span class="n">Unregister</span><span class="w"> </span><span class="n">Serial</span><span class="w"> </span><span class="n">Class</span><span class="o">:</span><span class="w"> </span><span class="o">/</span><span class="n">dev</span><span class="o">/</span><span class="n">ttyUSB0</span><span class="w"> </span><span class="p">(</span><span class="n">ftdi</span><span class="p">)</span>
+<span class="p">[</span><span class="n">I</span><span class="o">/</span><span class="n">usbh_serial</span><span class="p">]</span><span class="w"> </span><span class="n">Unregister</span><span class="w"> </span><span class="n">Serial</span><span class="w"> </span><span class="n">Class</span><span class="o">:</span><span class="w"> </span><span class="o">/</span><span class="n">dev</span><span class="o">/</span><span class="n">ttyUSB1</span><span class="w"> </span><span class="p">(</span><span class="n">ftdi</span><span class="p">)</span>
+<span class="p">[</span><span class="n">I</span><span class="o">/</span><span class="n">usbh_core</span><span class="p">]</span><span class="w"> </span><span class="n">Device</span><span class="w"> </span><span class="n">on</span><span class="w"> </span><span class="n">Bus</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="n">Hub</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">Port</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="n">disconnected</span>
+<span class="p">[</span><span class="n">I</span><span class="o">/</span><span class="n">usbh_hub</span><span class="p">]</span><span class="w"> </span><span class="n">New</span><span class="w"> </span><span class="n">full</span><span class="o">-</span><span class="n">speed</span><span class="w"> </span><span class="n">device</span><span class="w"> </span><span class="n">on</span><span class="w"> </span><span class="n">Bus</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="n">Hub</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">Port</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="n">connected</span>
+<span class="p">[</span><span class="n">I</span><span class="o">/</span><span class="n">usbh_core</span><span class="p">]</span><span class="w"> </span><span class="n">New</span><span class="w"> </span><span class="n">device</span><span class="w"> </span><span class="n">found</span><span class="p">,</span><span class="n">idVendor</span><span class="o">:</span><span class="mo">067</span><span class="n">b</span><span class="p">,</span><span class="n">idProduct</span><span class="o">:</span><span class="mi">2303</span><span class="p">,</span><span class="n">bcdDevice</span><span class="o">:</span><span class="mo">0300</span>
+<span class="p">[</span><span class="n">I</span><span class="o">/</span><span class="n">usbh_core</span><span class="p">]</span><span class="w"> </span><span class="n">The</span><span class="w"> </span><span class="n">device</span><span class="w"> </span><span class="n">has</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="n">bNumConfigurations</span>
+<span class="p">[</span><span class="n">I</span><span class="o">/</span><span class="n">usbh_core</span><span class="p">]</span><span class="w"> </span><span class="n">The</span><span class="w"> </span><span class="n">device</span><span class="w"> </span><span class="n">has</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="n">interfaces</span>
+<span class="p">[</span><span class="n">I</span><span class="o">/</span><span class="n">usbh_core</span><span class="p">]</span><span class="w"> </span><span class="n">Enumeration</span><span class="w"> </span><span class="n">success</span><span class="p">,</span><span class="w"> </span><span class="n">start</span><span class="w"> </span><span class="n">loading</span><span class="w"> </span><span class="n">class</span><span class="w"> </span><span class="n">driver</span>
+<span class="p">[</span><span class="n">I</span><span class="o">/</span><span class="n">usbh_core</span><span class="p">]</span><span class="w"> </span><span class="n">Loading</span><span class="w"> </span><span class="n">pl2303</span><span class="w"> </span><span class="n">class</span><span class="w"> </span><span class="n">driver</span><span class="w"> </span><span class="n">on</span><span class="w"> </span><span class="n">interface</span><span class="w"> </span><span class="mi">0</span>
+<span class="p">[</span><span class="n">I</span><span class="o">/</span><span class="n">usbh_pl2303</span><span class="p">]</span><span class="w"> </span><span class="n">Ep</span><span class="o">=</span><span class="mi">81</span><span class="w"> </span><span class="n">Attr</span><span class="o">=</span><span class="mo">03</span><span class="w"> </span><span class="n">Mps</span><span class="o">=</span><span class="mi">10</span><span class="w"> </span><span class="n">Interval</span><span class="o">=</span><span class="mo">01</span><span class="w"> </span><span class="n">Mult</span><span class="o">=</span><span class="mo">00</span>
+<span class="p">[</span><span class="n">I</span><span class="o">/</span><span class="n">usbh_pl2303</span><span class="p">]</span><span class="w"> </span><span class="n">chip</span><span class="w"> </span><span class="n">type</span><span class="o">:</span><span class="w"> </span><span class="n">PL2303HX</span>
+<span class="p">[</span><span class="n">I</span><span class="o">/</span><span class="n">usbh_serial</span><span class="p">]</span><span class="w"> </span><span class="n">Ep</span><span class="o">=</span><span class="mo">02</span><span class="w"> </span><span class="n">Attr</span><span class="o">=</span><span class="mo">02</span><span class="w"> </span><span class="n">Mps</span><span class="o">=</span><span class="mi">64</span><span class="w"> </span><span class="n">Interval</span><span class="o">=</span><span class="mo">00</span><span class="w"> </span><span class="n">Mult</span><span class="o">=</span><span class="mo">00</span>
+<span class="p">[</span><span class="n">I</span><span class="o">/</span><span class="n">usbh_serial</span><span class="p">]</span><span class="w"> </span><span class="n">Ep</span><span class="o">=</span><span class="mi">83</span><span class="w"> </span><span class="n">Attr</span><span class="o">=</span><span class="mo">02</span><span class="w"> </span><span class="n">Mps</span><span class="o">=</span><span class="mi">64</span><span class="w"> </span><span class="n">Interval</span><span class="o">=</span><span class="mo">00</span><span class="w"> </span><span class="n">Mult</span><span class="o">=</span><span class="mo">00</span>
+<span class="p">[</span><span class="n">I</span><span class="o">/</span><span class="n">usbh_serial</span><span class="p">]</span><span class="w"> </span><span class="n">Register</span><span class="w"> </span><span class="n">Serial</span><span class="w"> </span><span class="n">Class</span><span class="o">:</span><span class="w"> </span><span class="o">/</span><span class="n">dev</span><span class="o">/</span><span class="n">ttyUSB0</span><span class="w"> </span><span class="p">(</span><span class="n">pl2303</span><span class="p">)</span>
+<span class="n">start</span><span class="w"> </span><span class="n">serial</span><span class="w"> </span><span class="n">loopback</span><span class="w"> </span><span class="n">test</span><span class="p">,</span><span class="w"> </span><span class="n">len</span><span class="o">:</span><span class="w"> </span><span class="mi">1024</span>
+<span class="n">send</span><span class="w"> </span><span class="n">over</span>
+<span class="n">receive</span><span class="w"> </span><span class="n">over</span>
+<span class="n">serial</span><span class="w"> </span><span class="n">loopback</span><span class="w"> </span><span class="n">test</span><span class="w"> </span><span class="n">success</span>
+<span class="p">[</span><span class="n">I</span><span class="o">/</span><span class="n">usbh_serial</span><span class="p">]</span><span class="w"> </span><span class="n">Unregister</span><span class="w"> </span><span class="n">Serial</span><span class="w"> </span><span class="n">Class</span><span class="o">:</span><span class="w"> </span><span class="o">/</span><span class="n">dev</span><span class="o">/</span><span class="n">ttyUSB0</span><span class="w"> </span><span class="p">(</span><span class="n">pl2303</span><span class="p">)</span>
+<span class="p">[</span><span class="n">I</span><span class="o">/</span><span class="n">usbh_core</span><span class="p">]</span><span class="w"> </span><span class="n">Device</span><span class="w"> </span><span class="n">on</span><span class="w"> </span><span class="n">Bus</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="n">Hub</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">Port</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="n">disconnected</span>
+<span class="p">[</span><span class="n">W</span><span class="o">/</span><span class="n">usbh_hub</span><span class="p">]</span><span class="w"> </span><span class="n">Failed</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">enable</span><span class="w"> </span><span class="n">port</span><span class="w"> </span><span class="mi">1</span>
+<span class="p">[</span><span class="n">I</span><span class="o">/</span><span class="n">usbh_hub</span><span class="p">]</span><span class="w"> </span><span class="n">New</span><span class="w"> </span><span class="n">full</span><span class="o">-</span><span class="n">speed</span><span class="w"> </span><span class="n">device</span><span class="w"> </span><span class="n">on</span><span class="w"> </span><span class="n">Bus</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="n">Hub</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">Port</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="n">connected</span>
+<span class="p">[</span><span class="n">I</span><span class="o">/</span><span class="n">usbh_core</span><span class="p">]</span><span class="w"> </span><span class="n">New</span><span class="w"> </span><span class="n">device</span><span class="w"> </span><span class="n">found</span><span class="p">,</span><span class="n">idVendor</span><span class="o">:</span><span class="mi">1</span><span class="n">a86</span><span class="p">,</span><span class="n">idProduct</span><span class="o">:</span><span class="mi">7523</span><span class="p">,</span><span class="n">bcdDevice</span><span class="o">:</span><span class="mo">0264</span>
+<span class="p">[</span><span class="n">I</span><span class="o">/</span><span class="n">usbh_core</span><span class="p">]</span><span class="w"> </span><span class="n">The</span><span class="w"> </span><span class="n">device</span><span class="w"> </span><span class="n">has</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="n">bNumConfigurations</span>
+<span class="p">[</span><span class="n">I</span><span class="o">/</span><span class="n">usbh_core</span><span class="p">]</span><span class="w"> </span><span class="n">The</span><span class="w"> </span><span class="n">device</span><span class="w"> </span><span class="n">has</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="n">interfaces</span>
+<span class="p">[</span><span class="n">I</span><span class="o">/</span><span class="n">usbh_core</span><span class="p">]</span><span class="w"> </span><span class="n">Enumeration</span><span class="w"> </span><span class="n">success</span><span class="p">,</span><span class="w"> </span><span class="n">start</span><span class="w"> </span><span class="n">loading</span><span class="w"> </span><span class="n">class</span><span class="w"> </span><span class="n">driver</span>
+<span class="p">[</span><span class="n">I</span><span class="o">/</span><span class="n">usbh_core</span><span class="p">]</span><span class="w"> </span><span class="n">Loading</span><span class="w"> </span><span class="n">ch34x</span><span class="w"> </span><span class="n">class</span><span class="w"> </span><span class="n">driver</span><span class="w"> </span><span class="n">on</span><span class="w"> </span><span class="n">interface</span><span class="w"> </span><span class="mi">0</span>
+<span class="p">[</span><span class="n">I</span><span class="o">/</span><span class="n">usbh_ch43x</span><span class="p">]</span><span class="w"> </span><span class="n">Ep</span><span class="o">=</span><span class="mi">81</span><span class="w"> </span><span class="n">Attr</span><span class="o">=</span><span class="mo">03</span><span class="w"> </span><span class="n">Mps</span><span class="o">=</span><span class="mi">8</span><span class="w"> </span><span class="n">Interval</span><span class="o">=</span><span class="mo">01</span><span class="w"> </span><span class="n">Mult</span><span class="o">=</span><span class="mo">00</span>
+<span class="p">[</span><span class="n">I</span><span class="o">/</span><span class="n">usbh_ch43x</span><span class="p">]</span><span class="w"> </span><span class="n">chip</span><span class="w"> </span><span class="n">version</span><span class="o">:</span><span class="w"> </span><span class="mh">0x31</span>
+<span class="p">[</span><span class="n">I</span><span class="o">/</span><span class="n">usbh_serial</span><span class="p">]</span><span class="w"> </span><span class="n">Ep</span><span class="o">=</span><span class="mi">82</span><span class="w"> </span><span class="n">Attr</span><span class="o">=</span><span class="mo">02</span><span class="w"> </span><span class="n">Mps</span><span class="o">=</span><span class="mi">32</span><span class="w"> </span><span class="n">Interval</span><span class="o">=</span><span class="mo">00</span><span class="w"> </span><span class="n">Mult</span><span class="o">=</span><span class="mo">00</span>
+<span class="p">[</span><span class="n">I</span><span class="o">/</span><span class="n">usbh_serial</span><span class="p">]</span><span class="w"> </span><span class="n">Ep</span><span class="o">=</span><span class="mo">02</span><span class="w"> </span><span class="n">Attr</span><span class="o">=</span><span class="mo">02</span><span class="w"> </span><span class="n">Mps</span><span class="o">=</span><span class="mi">32</span><span class="w"> </span><span class="n">Interval</span><span class="o">=</span><span class="mo">00</span><span class="w"> </span><span class="n">Mult</span><span class="o">=</span><span class="mo">00</span>
+<span class="p">[</span><span class="n">I</span><span class="o">/</span><span class="n">usbh_serial</span><span class="p">]</span><span class="w"> </span><span class="n">Register</span><span class="w"> </span><span class="n">Serial</span><span class="w"> </span><span class="n">Class</span><span class="o">:</span><span class="w"> </span><span class="o">/</span><span class="n">dev</span><span class="o">/</span><span class="n">ttyUSB0</span><span class="w"> </span><span class="p">(</span><span class="n">ch34x</span><span class="p">)</span>
+<span class="n">start</span><span class="w"> </span><span class="n">serial</span><span class="w"> </span><span class="n">loopback</span><span class="w"> </span><span class="n">test</span><span class="p">,</span><span class="w"> </span><span class="n">len</span><span class="o">:</span><span class="w"> </span><span class="mi">1024</span>
+<span class="n">send</span><span class="w"> </span><span class="n">over</span>
+<span class="n">receive</span><span class="w"> </span><span class="n">over</span>
+<span class="n">serial</span><span class="w"> </span><span class="n">loopback</span><span class="w"> </span><span class="n">test</span><span class="w"> </span><span class="n">success</span>
+<span class="p">[</span><span class="n">I</span><span class="o">/</span><span class="n">usbh_serial</span><span class="p">]</span><span class="w"> </span><span class="n">Unregister</span><span class="w"> </span><span class="n">Serial</span><span class="w"> </span><span class="n">Class</span><span class="o">:</span><span class="w"> </span><span class="o">/</span><span class="n">dev</span><span class="o">/</span><span class="n">ttyUSB0</span><span class="w"> </span><span class="p">(</span><span class="n">ch34x</span><span class="p">)</span>
+<span class="p">[</span><span class="n">I</span><span class="o">/</span><span class="n">usbh_core</span><span class="p">]</span><span class="w"> </span><span class="n">Device</span><span class="w"> </span><span class="n">on</span><span class="w"> </span><span class="n">Bus</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="n">Hub</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">Port</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="n">disconnected</span>
+<span class="p">[</span><span class="n">I</span><span class="o">/</span><span class="n">usbh_hub</span><span class="p">]</span><span class="w"> </span><span class="n">New</span><span class="w"> </span><span class="n">full</span><span class="o">-</span><span class="n">speed</span><span class="w"> </span><span class="n">device</span><span class="w"> </span><span class="n">on</span><span class="w"> </span><span class="n">Bus</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="n">Hub</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">Port</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="n">connected</span>
+<span class="p">[</span><span class="n">I</span><span class="o">/</span><span class="n">usbh_core</span><span class="p">]</span><span class="w"> </span><span class="n">New</span><span class="w"> </span><span class="n">device</span><span class="w"> </span><span class="n">found</span><span class="p">,</span><span class="n">idVendor</span><span class="o">:</span><span class="mi">42</span><span class="n">bf</span><span class="p">,</span><span class="n">idProduct</span><span class="o">:</span><span class="n">b210</span><span class="p">,</span><span class="n">bcdDevice</span><span class="o">:</span><span class="mo">0217</span>
+<span class="p">[</span><span class="n">I</span><span class="o">/</span><span class="n">usbh_core</span><span class="p">]</span><span class="w"> </span><span class="n">The</span><span class="w"> </span><span class="n">device</span><span class="w"> </span><span class="n">has</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="n">bNumConfigurations</span>
+<span class="p">[</span><span class="n">I</span><span class="o">/</span><span class="n">usbh_core</span><span class="p">]</span><span class="w"> </span><span class="n">The</span><span class="w"> </span><span class="n">device</span><span class="w"> </span><span class="n">has</span><span class="w"> </span><span class="mi">3</span><span class="w"> </span><span class="n">interfaces</span>
+<span class="p">[</span><span class="n">I</span><span class="o">/</span><span class="n">usbh_core</span><span class="p">]</span><span class="w"> </span><span class="n">Enumeration</span><span class="w"> </span><span class="n">success</span><span class="p">,</span><span class="w"> </span><span class="n">start</span><span class="w"> </span><span class="n">loading</span><span class="w"> </span><span class="n">class</span><span class="w"> </span><span class="n">driver</span>
+<span class="p">[</span><span class="n">E</span><span class="o">/</span><span class="n">usbh_core</span><span class="p">]</span><span class="w"> </span><span class="n">Do</span><span class="w"> </span><span class="n">not</span><span class="w"> </span><span class="n">support</span><span class="w"> </span><span class="n">Class</span><span class="o">:</span><span class="mh">0xff</span><span class="p">,</span><span class="w"> </span><span class="n">Subclass</span><span class="o">:</span><span class="mh">0x01</span><span class="p">,</span><span class="w"> </span><span class="n">Protocl</span><span class="o">:</span><span class="mh">0x00</span><span class="w"> </span><span class="n">on</span><span class="w"> </span><span class="n">interface</span><span class="w"> </span><span class="mi">0</span>
+<span class="p">[</span><span class="n">I</span><span class="o">/</span><span class="n">usbh_core</span><span class="p">]</span><span class="w"> </span><span class="n">Loading</span><span class="w"> </span><span class="n">cdc_acm</span><span class="w"> </span><span class="n">class</span><span class="w"> </span><span class="n">driver</span><span class="w"> </span><span class="n">on</span><span class="w"> </span><span class="n">interface</span><span class="w"> </span><span class="mi">1</span>
+<span class="p">[</span><span class="n">I</span><span class="o">/</span><span class="n">usbh_cdc_acm</span><span class="p">]</span><span class="w"> </span><span class="n">Ep</span><span class="o">=</span><span class="mi">85</span><span class="w"> </span><span class="n">Attr</span><span class="o">=</span><span class="mo">03</span><span class="w"> </span><span class="n">Mps</span><span class="o">=</span><span class="mi">64</span><span class="w"> </span><span class="n">Interval</span><span class="o">=</span><span class="mo">00</span><span class="w"> </span><span class="n">Mult</span><span class="o">=</span><span class="mo">00</span>
+<span class="p">[</span><span class="n">I</span><span class="o">/</span><span class="n">usbh_serial</span><span class="p">]</span><span class="w"> </span><span class="n">Ep</span><span class="o">=</span><span class="mo">04</span><span class="w"> </span><span class="n">Attr</span><span class="o">=</span><span class="mo">02</span><span class="w"> </span><span class="n">Mps</span><span class="o">=</span><span class="mi">64</span><span class="w"> </span><span class="n">Interval</span><span class="o">=</span><span class="mo">00</span><span class="w"> </span><span class="n">Mult</span><span class="o">=</span><span class="mo">00</span>
+<span class="p">[</span><span class="n">I</span><span class="o">/</span><span class="n">usbh_serial</span><span class="p">]</span><span class="w"> </span><span class="n">Ep</span><span class="o">=</span><span class="mi">83</span><span class="w"> </span><span class="n">Attr</span><span class="o">=</span><span class="mo">02</span><span class="w"> </span><span class="n">Mps</span><span class="o">=</span><span class="mi">64</span><span class="w"> </span><span class="n">Interval</span><span class="o">=</span><span class="mo">00</span><span class="w"> </span><span class="n">Mult</span><span class="o">=</span><span class="mo">00</span>
+<span class="p">[</span><span class="n">I</span><span class="o">/</span><span class="n">usbh_serial</span><span class="p">]</span><span class="w"> </span><span class="n">Register</span><span class="w"> </span><span class="n">Serial</span><span class="w"> </span><span class="n">Class</span><span class="o">:</span><span class="w"> </span><span class="o">/</span><span class="n">dev</span><span class="o">/</span><span class="n">ttyACM0</span><span class="w"> </span><span class="p">(</span><span class="n">cdc_acm</span><span class="p">)</span>
+<span class="p">[</span><span class="n">I</span><span class="o">/</span><span class="n">usbh_core</span><span class="p">]</span><span class="w"> </span><span class="n">Loading</span><span class="w"> </span><span class="n">cdc_data</span><span class="w"> </span><span class="n">class</span><span class="w"> </span><span class="n">driver</span><span class="w"> </span><span class="n">on</span><span class="w"> </span><span class="n">interface</span><span class="w"> </span><span class="mi">2</span>
+<span class="n">start</span><span class="w"> </span><span class="n">serial</span><span class="w"> </span><span class="n">loopback</span><span class="w"> </span><span class="n">test</span><span class="p">,</span><span class="w"> </span><span class="n">len</span><span class="o">:</span><span class="w"> </span><span class="mi">1024</span>
+<span class="n">send</span><span class="w"> </span><span class="n">over</span>
+<span class="n">receive</span><span class="w"> </span><span class="n">over</span>
+<span class="n">serial</span><span class="w"> </span><span class="n">loopback</span><span class="w"> </span><span class="n">test</span><span class="w"> </span><span class="n">success</span>
+<span class="p">[</span><span class="n">I</span><span class="o">/</span><span class="n">usbh_serial</span><span class="p">]</span><span class="w"> </span><span class="n">Unregister</span><span class="w"> </span><span class="n">Serial</span><span class="w"> </span><span class="n">Class</span><span class="o">:</span><span class="w"> </span><span class="o">/</span><span class="n">dev</span><span class="o">/</span><span class="n">ttyACM0</span><span class="w"> </span><span class="p">(</span><span class="n">cdc_acm</span><span class="p">)</span>
+<span class="p">[</span><span class="n">I</span><span class="o">/</span><span class="n">usbh_core</span><span class="p">]</span><span class="w"> </span><span class="n">Device</span><span class="w"> </span><span class="n">on</span><span class="w"> </span><span class="n">Bus</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="n">Hub</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">Port</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="n">disconnected</span>
+</pre></div>
+</div>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="usbd_mtp.html" class="btn btn-neutral float-left" title="MTP Device" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="usbh_hid.html" class="btn btn-neutral float-right" title="HID Host" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022 ~ 2026, sakumisu.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,277 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>USB Video Device &mdash; CherryUSB 1.6.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=9edc463e" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=d6a008b6"></script>
+      <script src="../_static/doctools.js?v=9a2dae69"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="WinUSB Device" href="usbd_winusb.html" />
+    <link rel="prev" title="AudioV2 Device" href="usbd_audiov2.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            CherryUSB
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">快速上手</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../quick_start/start.html">入门必看</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../quick_start/demo.html">基于现有 demo 快速验证</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../quick_start/transplant.html">芯片通用移植指南</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../quick_start/rtthread.html">基于 RT-Thread 软件包开发指南</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../quick_start/q%26a.html">Q &amp; A</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../quick_start/migration.html">部分改动迁移指南</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../quick_start/opensource.html">基于 CherryUSB 的开源项目</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../quick_start/usb_speed.html">USB 极限速度测试</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">USB 基本知识点</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../usb/usb2.0_basic.html">USB 基本概念(2.0 为主)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../usb/usb3.0_basic.html">USB 基本概念(3.0 为主)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../usb/usb_desc.html">USB 描述符</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../usb/usb_request.html">USB 设备请求</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../usb/usb_enum.html">USB 枚举</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../usb/usb_ext.html">USB 知识点拓展</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">API 手册</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../api/api_device.html">设备协议栈</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api/api_host.html">主机协议栈</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api/api_port.html">主从驱动</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api/api_config.html">USB CONFIG 说明</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Class 指南</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../class/class_cdc.html">CDC</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../class/class_hid.html">HID</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../class/class_msc.html">MSC</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../class/class_audio.html">UAC</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../class/class_video.html">UVC</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../class/winusb.html">WINUSB</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">例程</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="usbd_cdc_acm.html">CDC ACM Device</a></li>
+<li class="toctree-l1"><a class="reference internal" href="usbd_hid.html">HID Device</a></li>
+<li class="toctree-l1"><a class="reference internal" href="usbd_msc.html">MSC Device</a></li>
+<li class="toctree-l1"><a class="reference internal" href="usbd_audiov1.html">AudioV1 Device</a></li>
+<li class="toctree-l1"><a class="reference internal" href="usbd_audiov2.html">AudioV2 Device</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">USB Video Device</a></li>
+<li class="toctree-l1"><a class="reference internal" href="usbd_winusb.html">WinUSB Device</a></li>
+<li class="toctree-l1"><a class="reference internal" href="usbd_webusb.html">WebUSB Device</a></li>
+<li class="toctree-l1"><a class="reference internal" href="usbd_rndis.html">CDC RNDIS Device</a></li>
+<li class="toctree-l1"><a class="reference internal" href="usbd_ecm.html">CDC ECM Device</a></li>
+<li class="toctree-l1"><a class="reference internal" href="usbd_adb.html">ADB Device</a></li>
+<li class="toctree-l1"><a class="reference internal" href="usbd_mtp.html">MTP Device</a></li>
+<li class="toctree-l1"><a class="reference internal" href="usbh_serial.html">Serial Host</a></li>
+<li class="toctree-l1"><a class="reference internal" href="usbh_hid.html">HID Host</a></li>
+<li class="toctree-l1"><a class="reference internal" href="usbh_msc.html">MSC Host</a></li>
+<li class="toctree-l1"><a class="reference internal" href="usbh_net.html">Network Host</a></li>
+<li class="toctree-l1"><a class="reference internal" href="usbh_bluetooth.html">BTBLE Host</a></li>
+<li class="toctree-l1"><a class="reference internal" href="usbh_wifi.html">WIFI Host</a></li>
+<li class="toctree-l1"><a class="reference internal" href="usbh_audio.html">Audio Host</a></li>
+<li class="toctree-l1"><a class="reference internal" href="usbh_video.html">Video Host</a></li>
+<li class="toctree-l1"><a class="reference internal" href="usb_otg.html">USB OTG</a></li>
+<li class="toctree-l1"><a class="reference internal" href="usbd_vendor.html">Vendor Device 驱动编写</a></li>
+<li class="toctree-l1"><a class="reference internal" href="usbh_vendor.html">Vendor Host 驱动编写</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">USBIP 介绍</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../usbip/ohci.html">OHCI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../usbip/ehci.html">EHCI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../usbip/xhci.html">XHCI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../usbip/chipidea.html">CHIPIDEA</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../usbip/dwc2.html">DWC2</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../usbip/musb.html">MUSB</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../usbip/fotg210.html">FOTG210</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../usbip/cdns2.html">CDNS2</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../usbip/cdns3.html">CDNS3</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../usbip/dwc3.html">DWC3</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">工具使用</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../tools/index.html">chryusb_configurator</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tools/index.html#usb-protocol-suite">力科 USB Protocol Suite</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tools/index.html#wireshark">Wireshark</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tools/index.html#audacity">Audacity</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Release Notes</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../version.html">版本说明</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">性能展示</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../show/index.html">性能展示</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">商业支持</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../support/index.html">商业支持</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">CherryUSB</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">USB Video Device</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/demo/usbd_video.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="usb-video-device">
+<h1>USB Video Device<a class="headerlink" href="#usb-video-device" title="Link to this heading"></a></h1>
+<p>本节主要演示 USB UAC 功能，支持 YUYV, MJPEG, H264 格式。为了方便演示，都采用的静态图。</p>
+<p>demo 包含 <strong>video_static_yuyv_template</strong>, <strong>video_static_mjpeg_template</strong>, <strong>video_static_h264_template</strong>, 仅描述符和图片数据不同。</p>
+<ul class="simple">
+<li><p>在高速模式下，默认最大是1024字节，但是如果芯片支持 additional transcations，可以配置为最高 2048字节或者3072字节，这样可以提高传输效率。</p></li>
+</ul>
+<div class="highlight-C notranslate"><div class="highlight"><pre><span></span><span class="cp">#ifdef CONFIG_USB_HS</span>
+<span class="cp">#define MAX_PAYLOAD_SIZE  1024 </span><span class="c1">// for high speed with one transcations every one micro frame</span>
+<span class="cp">#define VIDEO_PACKET_SIZE (unsigned int)(((MAX_PAYLOAD_SIZE / 1)) | (0x00 &lt;&lt; 11))</span>
+
+<span class="c1">// #define MAX_PAYLOAD_SIZE  2048 // for high speed with two transcations every one micro frame</span>
+<span class="c1">// #define VIDEO_PACKET_SIZE (unsigned int)(((MAX_PAYLOAD_SIZE / 2)) | (0x01 &lt;&lt; 11))</span>
+
+<span class="c1">// #define MAX_PAYLOAD_SIZE  3072 // for high speed with three transcations every one micro frame</span>
+<span class="c1">// #define VIDEO_PACKET_SIZE (unsigned int)(((MAX_PAYLOAD_SIZE / 3)) | (0x02 &lt;&lt; 11))</span>
+
+<span class="cp">#else</span>
+<span class="cp">#define MAX_PAYLOAD_SIZE  1020</span>
+<span class="cp">#define VIDEO_PACKET_SIZE (unsigned int)(((MAX_PAYLOAD_SIZE / 1)) | (0x00 &lt;&lt; 11))</span>
+<span class="cp">#endif</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>通常只需要修改 WIDTH 和 HEIGHT</p></li>
+</ul>
+<div class="highlight-C notranslate"><div class="highlight"><pre><span></span><span class="cp">#define WIDTH  (unsigned int)(640)</span>
+<span class="cp">#define HEIGHT (unsigned int)(480)</span>
+
+<span class="cp">#define CAM_FPS        (30)</span>
+<span class="cp">#define INTERVAL       (unsigned long)(10000000 / CAM_FPS)</span>
+<span class="cp">#define MIN_BIT_RATE   (unsigned long)(WIDTH * HEIGHT * 16 * CAM_FPS) </span><span class="c1">//16 bit</span>
+<span class="cp">#define MAX_BIT_RATE   (unsigned long)(WIDTH * HEIGHT * 16 * CAM_FPS)</span>
+<span class="cp">#define MAX_FRAME_SIZE (unsigned long)(WIDTH * HEIGHT * 2)</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>USB 端点配置，默认 interval 为 1，也就是全速模式下 1ms，高速模式下 125us。同步类型使用异步模式。</p></li>
+</ul>
+<div class="highlight-C notranslate"><div class="highlight"><pre><span></span><span class="cm">/* 1.2.2.2 Standard VideoStream Isochronous Video Data Endpoint Descriptor */</span>
+<span class="n">USB_ENDPOINT_DESCRIPTOR_INIT</span><span class="p">(</span><span class="n">VIDEO_IN_EP</span><span class="p">,</span><span class="w"> </span><span class="mh">0x05</span><span class="p">,</span><span class="w"> </span><span class="n">VIDEO_PACKET_SIZE</span><span class="p">,</span><span class="w"> </span><span class="mh">0x01</span><span class="p">),</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>使用 <cite>usbd_video_stream_start_write</cite> 传输数据, 最后 <strong>do_copy</strong> 选项表示是否将数据 copy 到 packet_buffer,</p></li>
+</ul>
+<p>如果不选择 copy， 则会直接在原图像数据中填充头部信息，并直接发送，达到 zero copy 功能。</p>
+<ul class="simple">
+<li><p>因为提供的是静态数据，不能被修改，因此需要重新给一个 frame_buffer 用于图像传输，在实际对接 camera 场景中是动态数据，直接使用 camera 的数据缓冲区即可。</p></li>
+</ul>
+<div class="highlight-C notranslate"><div class="highlight"><pre><span></span><span class="kt">void</span><span class="w"> </span><span class="nf">usbd_video_iso_callback</span><span class="p">(</span><span class="kt">uint8_t</span><span class="w"> </span><span class="n">busid</span><span class="p">,</span><span class="w"> </span><span class="kt">uint8_t</span><span class="w"> </span><span class="n">ep</span><span class="p">,</span><span class="w"> </span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">nbytes</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">usbd_video_stream_split_transfer</span><span class="p">(</span><span class="n">busid</span><span class="p">,</span><span class="w"> </span><span class="n">ep</span><span class="p">))</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="cm">/* one frame has done */</span>
+<span class="w">        </span><span class="n">iso_tx_busy</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">false</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+
+<span class="n">USB_NOCACHE_RAM_SECTION</span><span class="w"> </span><span class="n">USB_MEM_ALIGNX</span><span class="w"> </span><span class="kt">uint8_t</span><span class="w"> </span><span class="n">packet_buffer</span><span class="p">[</span><span class="n">MAX_PAYLOAD_SIZE</span><span class="p">];</span>
+<span class="n">USB_NOCACHE_RAM_SECTION</span><span class="w"> </span><span class="n">USB_MEM_ALIGNX</span><span class="w"> </span><span class="kt">uint8_t</span><span class="w"> </span><span class="n">frame_buffer</span><span class="p">[</span><span class="mi">32</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">1024</span><span class="p">];</span>
+
+<span class="kt">void</span><span class="w"> </span><span class="nf">video_test</span><span class="p">(</span><span class="kt">uint8_t</span><span class="w"> </span><span class="n">busid</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="n">memset</span><span class="p">(</span><span class="n">packet_buffer</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="k">sizeof</span><span class="p">(</span><span class="n">packet_buffer</span><span class="p">));</span>
+
+<span class="w">    </span><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">tx_flag</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="n">iso_tx_busy</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">true</span><span class="p">;</span>
+<span class="w">            </span><span class="n">memcpy</span><span class="p">(</span><span class="n">frame_buffer</span><span class="p">,</span><span class="w"> </span><span class="n">cherryusb_mjpeg</span><span class="p">,</span><span class="w"> </span><span class="k">sizeof</span><span class="p">(</span><span class="n">cherryusb_mjpeg</span><span class="p">));</span><span class="w"> </span><span class="c1">// cherryusb_mjpeg is a static MJPEG frame buffer, so we need copy it to frame_buffer</span>
+<span class="w">            </span><span class="n">usbd_video_stream_start_write</span><span class="p">(</span><span class="n">busid</span><span class="p">,</span><span class="w"> </span><span class="n">VIDEO_IN_EP</span><span class="p">,</span><span class="w"> </span><span class="n">packet_buffer</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="kt">uint8_t</span><span class="w"> </span><span class="o">*</span><span class="p">)</span><span class="n">frame_buffer</span><span class="p">,</span><span class="w"> </span><span class="k">sizeof</span><span class="p">(</span><span class="n">cherryusb_mjpeg</span><span class="p">),</span><span class="w"> </span><span class="nb">false</span><span class="p">);</span>
+<span class="w">            </span><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="n">iso_tx_busy</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">tx_flag</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                    </span><span class="k">break</span><span class="p">;</span>
+<span class="w">                </span><span class="p">}</span>
+<span class="w">            </span><span class="p">}</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="usbd_audiov2.html" class="btn btn-neutral float-left" title="AudioV2 Device" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="usbd_winusb.html" class="btn btn-neutral float-right" title="WinUSB Device" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022 ~ 2026, sakumisu.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

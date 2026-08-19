@@ -1,0 +1,535 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>主机协议栈 &mdash; CherryUSB 1.6.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=9edc463e" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=d6a008b6"></script>
+      <script src="../_static/doctools.js?v=9a2dae69"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="主从驱动" href="api_port.html" />
+    <link rel="prev" title="设备协议栈" href="api_device.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            CherryUSB
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">快速上手</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../quick_start/start.html">入门必看</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../quick_start/demo.html">基于现有 demo 快速验证</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../quick_start/transplant.html">芯片通用移植指南</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../quick_start/rtthread.html">基于 RT-Thread 软件包开发指南</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../quick_start/q%26a.html">Q &amp; A</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../quick_start/migration.html">部分改动迁移指南</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../quick_start/opensource.html">基于 CherryUSB 的开源项目</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../quick_start/usb_speed.html">USB 极限速度测试</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">USB 基本知识点</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../usb/usb2.0_basic.html">USB 基本概念(2.0 为主)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../usb/usb3.0_basic.html">USB 基本概念(3.0 为主)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../usb/usb_desc.html">USB 描述符</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../usb/usb_request.html">USB 设备请求</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../usb/usb_enum.html">USB 枚举</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../usb/usb_ext.html">USB 知识点拓展</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">API 手册</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="api_device.html">设备协议栈</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">主机协议栈</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#core">CORE</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#class">CLASS 驱动信息结构体</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id2">端点结构体</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id3">接口备用结构体</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id4">接口结构体</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id5">配置结构体</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#hubport">hubport 结构体</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#hub">hub 结构体</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#usbh-initialize">usbh_initialize</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#usbh-find-class-instance">usbh_find_class_instance</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#lsusb">lsusb</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#serial">SERIAL</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#usbh-serial-open">usbh_serial_open</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#usbh-serial-close">usbh_serial_close</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#usbh-serial-control">usbh_serial_control</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#usbh-serial-write">usbh_serial_write</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#usbh-serial-read">usbh_serial_read</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#usbh-serial-cdc-write-async">usbh_serial_cdc_write_async</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#usbh-serial-cdc-read-async">usbh_serial_cdc_read_async</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#hid">HID</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#msc">MSC</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#usbh-msc-scsi-init">usbh_msc_scsi_init</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#usbh-msc-scsi-write10">usbh_msc_scsi_write10</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#usbh-msc-scsi-read10">usbh_msc_scsi_read10</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#network">NETWORK</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="api_port.html">主从驱动</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api_config.html">USB CONFIG 说明</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Class 指南</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../class/class_cdc.html">CDC</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../class/class_hid.html">HID</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../class/class_msc.html">MSC</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../class/class_audio.html">UAC</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../class/class_video.html">UVC</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../class/winusb.html">WINUSB</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">例程</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../demo/usbd_cdc_acm.html">CDC ACM Device</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../demo/usbd_hid.html">HID Device</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../demo/usbd_msc.html">MSC Device</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../demo/usbd_audiov1.html">AudioV1 Device</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../demo/usbd_audiov2.html">AudioV2 Device</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../demo/usbd_video.html">USB Video Device</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../demo/usbd_winusb.html">WinUSB Device</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../demo/usbd_webusb.html">WebUSB Device</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../demo/usbd_rndis.html">CDC RNDIS Device</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../demo/usbd_ecm.html">CDC ECM Device</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../demo/usbd_adb.html">ADB Device</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../demo/usbd_mtp.html">MTP Device</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../demo/usbh_serial.html">Serial Host</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../demo/usbh_hid.html">HID Host</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../demo/usbh_msc.html">MSC Host</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../demo/usbh_net.html">Network Host</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../demo/usbh_bluetooth.html">BTBLE Host</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../demo/usbh_wifi.html">WIFI Host</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../demo/usbh_audio.html">Audio Host</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../demo/usbh_video.html">Video Host</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../demo/usb_otg.html">USB OTG</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../demo/usbd_vendor.html">Vendor Device 驱动编写</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../demo/usbh_vendor.html">Vendor Host 驱动编写</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">USBIP 介绍</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../usbip/ohci.html">OHCI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../usbip/ehci.html">EHCI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../usbip/xhci.html">XHCI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../usbip/chipidea.html">CHIPIDEA</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../usbip/dwc2.html">DWC2</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../usbip/musb.html">MUSB</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../usbip/fotg210.html">FOTG210</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../usbip/cdns2.html">CDNS2</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../usbip/cdns3.html">CDNS3</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../usbip/dwc3.html">DWC3</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">工具使用</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../tools/index.html">chryusb_configurator</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tools/index.html#usb-protocol-suite">力科 USB Protocol Suite</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tools/index.html#wireshark">Wireshark</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tools/index.html#audacity">Audacity</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Release Notes</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../version.html">版本说明</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">性能展示</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../show/index.html">性能展示</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">商业支持</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../support/index.html">商业支持</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">CherryUSB</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">主机协议栈</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/api/api_host.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="id1">
+<h1>主机协议栈<a class="headerlink" href="#id1" title="Link to this heading"></a></h1>
+<p>关于主机协议栈中结构体的命名、分类、成员组成，参考下面这两张图：</p>
+<figure class="align-default">
+<img alt="../_images/api_host1.png" src="../_images/api_host1.png" />
+</figure>
+<figure class="align-default">
+<img alt="../_images/api_host2.png" src="../_images/api_host2.png" />
+</figure>
+<section id="core">
+<h2>CORE<a class="headerlink" href="#core" title="Link to this heading"></a></h2>
+<section id="class">
+<h3>CLASS 驱动信息结构体<a class="headerlink" href="#class" title="Link to this heading"></a></h3>
+<div class="highlight-C notranslate"><div class="highlight"><pre><span></span><span class="k">struct</span><span class="w"> </span><span class="nc">usbh_class_info</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kt">uint8_t</span><span class="w"> </span><span class="n">match_flags</span><span class="p">;</span><span class="w">           </span><span class="cm">/* Used for product specific matches; range is inclusive */</span>
+<span class="w">    </span><span class="kt">uint8_t</span><span class="w"> </span><span class="n">bInterfaceClass</span><span class="p">;</span><span class="w">       </span><span class="cm">/* Base device class code */</span>
+<span class="w">    </span><span class="kt">uint8_t</span><span class="w"> </span><span class="n">bInterfaceSubClass</span><span class="p">;</span><span class="w">    </span><span class="cm">/* Sub-class, depends on base class. Eg. */</span>
+<span class="w">    </span><span class="kt">uint8_t</span><span class="w"> </span><span class="n">bInterfaceProtocol</span><span class="p">;</span><span class="w">    </span><span class="cm">/* Protocol, depends on base class. Eg. */</span>
+<span class="w">    </span><span class="k">const</span><span class="w"> </span><span class="kt">uint16_t</span><span class="w"> </span><span class="p">(</span><span class="o">*</span><span class="n">id_table</span><span class="p">)[</span><span class="mi">2</span><span class="p">];</span><span class="w"> </span><span class="cm">/* List of Vendor/Product ID pairs */</span>
+<span class="w">    </span><span class="k">const</span><span class="w"> </span><span class="k">struct</span><span class="w"> </span><span class="nc">usbh_class_driver</span><span class="w"> </span><span class="o">*</span><span class="n">class_driver</span><span class="p">;</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+</section>
+<section id="id2">
+<h3>端点结构体<a class="headerlink" href="#id2" title="Link to this heading"></a></h3>
+<div class="highlight-C notranslate"><div class="highlight"><pre><span></span><span class="k">struct</span><span class="w"> </span><span class="nc">usbh_endpoint</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">struct</span><span class="w"> </span><span class="nc">usb_endpoint_descriptor</span><span class="w"> </span><span class="n">ep_desc</span><span class="p">;</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+</section>
+<section id="id3">
+<h3>接口备用结构体<a class="headerlink" href="#id3" title="Link to this heading"></a></h3>
+<div class="highlight-C notranslate"><div class="highlight"><pre><span></span><span class="k">struct</span><span class="w"> </span><span class="nc">usbh_interface_altsetting</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">struct</span><span class="w"> </span><span class="nc">usb_interface_descriptor</span><span class="w"> </span><span class="n">intf_desc</span><span class="p">;</span>
+<span class="w">    </span><span class="k">struct</span><span class="w"> </span><span class="nc">usbh_endpoint</span><span class="w"> </span><span class="n">ep</span><span class="p">[</span><span class="n">CONFIG_USBHOST_MAX_ENDPOINTS</span><span class="p">];</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+</section>
+<section id="id4">
+<h3>接口结构体<a class="headerlink" href="#id4" title="Link to this heading"></a></h3>
+<div class="highlight-C notranslate"><div class="highlight"><pre><span></span><span class="k">struct</span><span class="w"> </span><span class="nc">usbh_interface</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kt">char</span><span class="w"> </span><span class="n">devname</span><span class="p">[</span><span class="n">CONFIG_USBHOST_DEV_NAMELEN</span><span class="p">];</span>
+<span class="w">    </span><span class="k">struct</span><span class="w"> </span><span class="nc">usbh_class_driver</span><span class="w"> </span><span class="o">*</span><span class="n">class_driver</span><span class="p">;</span>
+<span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="o">*</span><span class="n">priv</span><span class="p">;</span>
+<span class="w">    </span><span class="k">struct</span><span class="w"> </span><span class="nc">usbh_interface_altsetting</span><span class="w"> </span><span class="n">altsetting</span><span class="p">[</span><span class="n">CONFIG_USBHOST_MAX_INTF_ALTSETTINGS</span><span class="p">];</span>
+<span class="w">    </span><span class="kt">uint8_t</span><span class="w"> </span><span class="n">altsetting_num</span><span class="p">;</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+</section>
+<section id="id5">
+<h3>配置结构体<a class="headerlink" href="#id5" title="Link to this heading"></a></h3>
+<div class="highlight-C notranslate"><div class="highlight"><pre><span></span><span class="k">struct</span><span class="w"> </span><span class="nc">usbh_configuration</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">struct</span><span class="w"> </span><span class="nc">usb_configuration_descriptor</span><span class="w"> </span><span class="n">config_desc</span><span class="p">;</span>
+<span class="w">    </span><span class="k">struct</span><span class="w"> </span><span class="nc">usbh_interface</span><span class="w"> </span><span class="n">intf</span><span class="p">[</span><span class="n">CONFIG_USBHOST_MAX_INTERFACES</span><span class="p">];</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+</section>
+<section id="hubport">
+<h3>hubport 结构体<a class="headerlink" href="#hubport" title="Link to this heading"></a></h3>
+<div class="highlight-C notranslate"><div class="highlight"><pre><span></span><span class="k">struct</span><span class="w"> </span><span class="nc">usbh_hubport</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kt">bool</span><span class="w"> </span><span class="n">connected</span><span class="p">;</span><span class="w">   </span><span class="cm">/* True: device connected; false: disconnected */</span>
+<span class="w">    </span><span class="kt">uint8_t</span><span class="w"> </span><span class="n">port</span><span class="p">;</span><span class="w">     </span><span class="cm">/* Hub port index */</span>
+<span class="w">    </span><span class="kt">uint8_t</span><span class="w"> </span><span class="n">dev_addr</span><span class="p">;</span><span class="w"> </span><span class="cm">/* device address */</span>
+<span class="w">    </span><span class="kt">uint8_t</span><span class="w"> </span><span class="n">speed</span><span class="p">;</span><span class="w">    </span><span class="cm">/* device speed */</span>
+<span class="w">    </span><span class="kt">uint8_t</span><span class="w"> </span><span class="n">depth</span><span class="p">;</span><span class="w">    </span><span class="cm">/* distance from root hub */</span>
+<span class="w">    </span><span class="kt">uint8_t</span><span class="w"> </span><span class="n">route</span><span class="p">;</span><span class="w">    </span><span class="cm">/* route string */</span>
+<span class="w">    </span><span class="kt">uint8_t</span><span class="w"> </span><span class="n">slot_id</span><span class="p">;</span><span class="w">  </span><span class="cm">/* slot id */</span>
+<span class="w">    </span><span class="k">struct</span><span class="w"> </span><span class="nc">usb_device_descriptor</span><span class="w"> </span><span class="n">device_desc</span><span class="p">;</span>
+<span class="w">    </span><span class="k">struct</span><span class="w"> </span><span class="nc">usbh_configuration</span><span class="w"> </span><span class="n">config</span><span class="p">;</span>
+<span class="w">    </span><span class="k">const</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="n">iManufacturer</span><span class="p">;</span>
+<span class="w">    </span><span class="k">const</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="n">iProduct</span><span class="p">;</span>
+<span class="w">    </span><span class="k">const</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="n">iSerialNumber</span><span class="p">;</span>
+<span class="w">    </span><span class="kt">uint8_t</span><span class="w"> </span><span class="o">*</span><span class="n">raw_config_desc</span><span class="p">;</span>
+<span class="w">    </span><span class="k">struct</span><span class="w"> </span><span class="nc">usb_setup_packet</span><span class="w"> </span><span class="o">*</span><span class="n">setup</span><span class="p">;</span>
+<span class="w">    </span><span class="k">struct</span><span class="w"> </span><span class="nc">usbh_hub</span><span class="w"> </span><span class="o">*</span><span class="n">parent</span><span class="p">;</span>
+<span class="w">    </span><span class="k">struct</span><span class="w"> </span><span class="nc">usbh_hub</span><span class="w"> </span><span class="o">*</span><span class="n">self</span><span class="p">;</span><span class="w"> </span><span class="cm">/* if this hubport is a hub */</span>
+<span class="w">    </span><span class="k">struct</span><span class="w"> </span><span class="nc">usbh_bus</span><span class="w"> </span><span class="o">*</span><span class="n">bus</span><span class="p">;</span>
+<span class="w">    </span><span class="k">struct</span><span class="w"> </span><span class="nc">usb_endpoint_descriptor</span><span class="w"> </span><span class="n">ep0</span><span class="p">;</span>
+<span class="w">    </span><span class="k">struct</span><span class="w"> </span><span class="nc">usbh_urb</span><span class="w"> </span><span class="n">ep0_urb</span><span class="p">;</span>
+<span class="w">    </span><span class="n">usb_osal_mutex_t</span><span class="w"> </span><span class="n">mutex</span><span class="p">;</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+</section>
+<section id="hub">
+<h3>hub 结构体<a class="headerlink" href="#hub" title="Link to this heading"></a></h3>
+<div class="highlight-C notranslate"><div class="highlight"><pre><span></span><span class="k">struct</span><span class="w"> </span><span class="nc">usbh_hub</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kt">bool</span><span class="w"> </span><span class="n">connected</span><span class="p">;</span>
+<span class="w">    </span><span class="kt">bool</span><span class="w"> </span><span class="n">is_roothub</span><span class="p">;</span>
+<span class="w">    </span><span class="kt">uint8_t</span><span class="w"> </span><span class="n">index</span><span class="p">;</span>
+<span class="w">    </span><span class="kt">uint8_t</span><span class="w"> </span><span class="n">hub_addr</span><span class="p">;</span>
+<span class="w">    </span><span class="kt">uint8_t</span><span class="w"> </span><span class="n">speed</span><span class="p">;</span>
+<span class="w">    </span><span class="kt">uint8_t</span><span class="w"> </span><span class="n">nports</span><span class="p">;</span>
+<span class="w">    </span><span class="kt">uint8_t</span><span class="w"> </span><span class="n">powerdelay</span><span class="p">;</span>
+<span class="w">    </span><span class="kt">uint8_t</span><span class="w"> </span><span class="n">tt_think</span><span class="p">;</span>
+<span class="w">    </span><span class="kt">bool</span><span class="w"> </span><span class="n">ismtt</span><span class="p">;</span>
+<span class="w">    </span><span class="k">struct</span><span class="w"> </span><span class="nc">usb_hub_descriptor</span><span class="w"> </span><span class="n">hub_desc</span><span class="p">;</span><span class="w"> </span><span class="cm">/* USB 2.0 only */</span>
+<span class="w">    </span><span class="k">struct</span><span class="w"> </span><span class="nc">usb_hub_ss_descriptor</span><span class="w"> </span><span class="n">hub_ss_desc</span><span class="p">;</span><span class="w"> </span><span class="cm">/* USB 3.0 only */</span>
+<span class="w">    </span><span class="k">struct</span><span class="w"> </span><span class="nc">usbh_hubport</span><span class="w"> </span><span class="n">child</span><span class="p">[</span><span class="n">CONFIG_USBHOST_MAX_EHPORTS</span><span class="p">];</span>
+<span class="w">    </span><span class="k">struct</span><span class="w"> </span><span class="nc">usbh_hubport</span><span class="w"> </span><span class="o">*</span><span class="n">parent</span><span class="p">;</span>
+<span class="w">    </span><span class="k">struct</span><span class="w"> </span><span class="nc">usbh_bus</span><span class="w"> </span><span class="o">*</span><span class="n">bus</span><span class="p">;</span>
+<span class="w">    </span><span class="k">struct</span><span class="w"> </span><span class="nc">usb_endpoint_descriptor</span><span class="w"> </span><span class="o">*</span><span class="n">intin</span><span class="p">;</span>
+<span class="w">    </span><span class="k">struct</span><span class="w"> </span><span class="nc">usbh_urb</span><span class="w"> </span><span class="n">intin_urb</span><span class="p">;</span>
+<span class="w">    </span><span class="kt">uint8_t</span><span class="w"> </span><span class="o">*</span><span class="n">int_buffer</span><span class="p">;</span>
+<span class="w">    </span><span class="k">struct</span><span class="w"> </span><span class="nc">usb_osal_timer</span><span class="w"> </span><span class="o">*</span><span class="n">int_timer</span><span class="p">;</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+</section>
+<section id="usbh-initialize">
+<h3>usbh_initialize<a class="headerlink" href="#usbh-initialize" title="Link to this heading"></a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">usbh_initialize</span></code> 用来初始化 usb 主机协议栈，包括：初始化 usb 主机控制器，创建 roothub 设备，创建 hub 检测线程。</p>
+<div class="highlight-C notranslate"><div class="highlight"><pre><span></span><span class="kt">int</span><span class="w"> </span><span class="nf">usbh_initialize</span><span class="p">(</span><span class="kt">uint8_t</span><span class="w"> </span><span class="n">busid</span><span class="p">,</span><span class="w"> </span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">reg_base</span><span class="p">,</span><span class="w"> </span><span class="n">usbh_event_handler_t</span><span class="w"> </span><span class="n">event_handler</span><span class="p">);</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p><strong>busid</strong>  bus id，从 0开始，不能超过 <cite>CONFIG_USBHOST_MAX_BUS</cite></p></li>
+<li><p><strong>reg_base</strong>  hcd 寄存器基地址</p></li>
+<li><p><strong>event_handler</strong>  host 事件回调函数，可以为NULL</p></li>
+<li><p><strong>return</strong>  0 表示正常其他表示错误</p></li>
+</ul>
+</section>
+<section id="usbh-find-class-instance">
+<h3>usbh_find_class_instance<a class="headerlink" href="#usbh-find-class-instance" title="Link to this heading"></a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">usbh_find_class_instance</span></code> 根据注册的 class 名称查找对应的 class 结构体句柄。</p>
+<div class="highlight-C notranslate"><div class="highlight"><pre><span></span><span class="kt">void</span><span class="w"> </span><span class="o">*</span><span class="nf">usbh_find_class_instance</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="n">devname</span><span class="p">);</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p><strong>devname</strong>  class 名称</p></li>
+<li><p><strong>return</strong>  class 结构体句柄</p></li>
+</ul>
+</section>
+<section id="lsusb">
+<h3>lsusb<a class="headerlink" href="#lsusb" title="Link to this heading"></a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">lsusb</span></code> 用来查看和操作 hub 上的设备信息。需要借助 shell 插件使用。</p>
+<div class="highlight-C notranslate"><div class="highlight"><pre><span></span><span class="kt">int</span><span class="w"> </span><span class="nf">lsusb</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">argc</span><span class="p">,</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="o">**</span><span class="n">argv</span><span class="p">);</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="serial">
+<h2>SERIAL<a class="headerlink" href="#serial" title="Link to this heading"></a></h2>
+<section id="usbh-serial-open">
+<h3>usbh_serial_open<a class="headerlink" href="#usbh-serial-open" title="Link to this heading"></a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">usbh_serial_open</span></code> 根据路径打开一个串口设备。</p>
+<div class="highlight-C notranslate"><div class="highlight"><pre><span></span><span class="k">struct</span><span class="w"> </span><span class="nc">usbh_serial</span><span class="w"> </span><span class="o">*</span><span class="n">usbh_serial_open</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="n">devname</span><span class="p">,</span><span class="w"> </span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">open_flags</span><span class="p">);</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p><strong>devname</strong>  串口路径</p></li>
+<li><p><strong>open_flags</strong>  打开标志，参考 <cite>USBH_SERIAL_OFLAG_*</cite> 定义</p></li>
+<li><p><strong>return</strong>  serial 结构体句柄</p></li>
+</ul>
+</section>
+<section id="usbh-serial-close">
+<h3>usbh_serial_close<a class="headerlink" href="#usbh-serial-close" title="Link to this heading"></a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">usbh_serial_close</span></code> 关闭串口设备。</p>
+<div class="highlight-C notranslate"><div class="highlight"><pre><span></span><span class="kt">void</span><span class="w"> </span><span class="nf">usbh_serial_close</span><span class="p">(</span><span class="k">struct</span><span class="w"> </span><span class="nc">usbh_serial</span><span class="w"> </span><span class="o">*</span><span class="n">serial</span><span class="p">);</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p><strong>serial</strong>  serial 结构体句柄</p></li>
+</ul>
+</section>
+<section id="usbh-serial-control">
+<h3>usbh_serial_control<a class="headerlink" href="#usbh-serial-control" title="Link to this heading"></a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">usbh_serial_control</span></code> 对串口进行配置。</p>
+<div class="highlight-C notranslate"><div class="highlight"><pre><span></span><span class="kt">int</span><span class="w"> </span><span class="nf">usbh_serial_control</span><span class="p">(</span><span class="k">struct</span><span class="w"> </span><span class="nc">usbh_serial</span><span class="w"> </span><span class="o">*</span><span class="n">serial</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">cmd</span><span class="p">,</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="o">*</span><span class="n">arg</span><span class="p">);</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p><strong>serial</strong>  serial 结构体句柄</p></li>
+<li><p><strong>cmd</strong>  控制命令，参考 <cite>USBH_SERIAL_CMD_*</cite> 定义</p></li>
+<li><p><strong>arg</strong>  控制参数指针</p></li>
+<li><p><strong>return</strong>  0 表示正常其他表示错误</p></li>
+</ul>
+</section>
+<section id="usbh-serial-write">
+<h3>usbh_serial_write<a class="headerlink" href="#usbh-serial-write" title="Link to this heading"></a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">usbh_serial_write</span></code> 向串口写数据。</p>
+<div class="highlight-C notranslate"><div class="highlight"><pre><span></span><span class="kt">int</span><span class="w"> </span><span class="nf">usbh_serial_write</span><span class="p">(</span><span class="k">struct</span><span class="w"> </span><span class="nc">usbh_serial</span><span class="w"> </span><span class="o">*</span><span class="n">serial</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="o">*</span><span class="n">buffer</span><span class="p">,</span><span class="w"> </span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">buflen</span><span class="p">);</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p><strong>serial</strong>  serial 结构体句柄</p></li>
+<li><p><strong>buffer</strong>  数据缓冲区指针</p></li>
+<li><p><strong>buflen</strong>  要写入的数据长度</p></li>
+<li><p><strong>return</strong>  实际写入的数据长度或者错误码</p></li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>如果没有开启 CONFIG_USB_DCACHE_ENABLE，则 buffer 需要是 nocache区域，否则需要是对齐到 CONFIG_USB_ALIGN_SIZE 的区域。</p>
+</div>
+</section>
+<section id="usbh-serial-read">
+<h3>usbh_serial_read<a class="headerlink" href="#usbh-serial-read" title="Link to this heading"></a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">usbh_serial_read</span></code> 从串口读数据。  <strong>如果没有设置波特率，不允许使用该 API，设置波特率后，内部会开启 rx 接收并将数据写入 ringbuf</strong>。</p>
+<div class="highlight-C notranslate"><div class="highlight"><pre><span></span><span class="kt">int</span><span class="w"> </span><span class="nf">usbh_serial_read</span><span class="p">(</span><span class="k">struct</span><span class="w"> </span><span class="nc">usbh_serial</span><span class="w"> </span><span class="o">*</span><span class="n">serial</span><span class="p">,</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="o">*</span><span class="n">buffer</span><span class="p">,</span><span class="w"> </span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">buflen</span><span class="p">);</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p><strong>serial</strong>  serial 结构体句柄</p></li>
+<li><p><strong>buffer</strong>  数据缓冲区指针</p></li>
+<li><p><strong>buflen</strong>  要读取的最大数据长度</p></li>
+<li><p><strong>return</strong>  实际读取的数据长度或者错误码</p></li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>由于内部使用了 ringbuffer，对于用户的 buffer 属性没有限制。</p>
+</div>
+</section>
+<section id="usbh-serial-cdc-write-async">
+<h3>usbh_serial_cdc_write_async<a class="headerlink" href="#usbh-serial-cdc-write-async" title="Link to this heading"></a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">usbh_serial_cdc_write_async</span></code> 异步从串口读数据。 <strong>如果设置了波特率，不允许使用该 API</strong>。</p>
+<div class="highlight-C notranslate"><div class="highlight"><pre><span></span><span class="kt">int</span><span class="w"> </span><span class="nf">usbh_serial_cdc_write_async</span><span class="p">(</span><span class="k">struct</span><span class="w"> </span><span class="nc">usbh_serial</span><span class="w"> </span><span class="o">*</span><span class="n">serial</span><span class="p">,</span><span class="w"> </span><span class="kt">uint8_t</span><span class="w"> </span><span class="o">*</span><span class="n">buffer</span><span class="p">,</span><span class="w"> </span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">buflen</span><span class="p">,</span><span class="w"> </span><span class="n">usbh_complete_callback_t</span><span class="w"> </span><span class="n">complete</span><span class="p">,</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="o">*</span><span class="n">arg</span><span class="p">);</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p><strong>serial</strong>  serial 结构体句柄</p></li>
+<li><p><strong>buffer</strong>  数据缓冲区指针</p></li>
+<li><p><strong>buflen</strong>  要发送的数据长度</p></li>
+<li><p><strong>complete</strong>  读数据完成回调函数</p></li>
+<li><p><strong>arg</strong>  回调函数参数</p></li>
+<li><p><strong>return</strong>  0 表示正常其他表示错误</p></li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>如果没有开启 CONFIG_USB_DCACHE_ENABLE，则 buffer 需要是 nocache区域，否则需要是对齐到 CONFIG_USB_ALIGN_SIZE 的区域。</p>
+</div>
+</section>
+<section id="usbh-serial-cdc-read-async">
+<h3>usbh_serial_cdc_read_async<a class="headerlink" href="#usbh-serial-cdc-read-async" title="Link to this heading"></a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">usbh_serial_cdc_read_async</span></code> 异步从串口读数据。 <a href="#id6"><span class="problematic" id="id7">**</span></a>如果设置了波特率，不允许使用该 API，设置波特率后，内部会开启 rx 接收并将数据写入 ringbuf <a href="#id8"><span class="problematic" id="id9">**</span></a>。</p>
+<div class="highlight-C notranslate"><div class="highlight"><pre><span></span><span class="kt">int</span><span class="w"> </span><span class="nf">usbh_serial_cdc_read_async</span><span class="p">(</span><span class="k">struct</span><span class="w"> </span><span class="nc">usbh_serial</span><span class="w"> </span><span class="o">*</span><span class="n">serial</span><span class="p">,</span><span class="w"> </span><span class="kt">uint8_t</span><span class="w"> </span><span class="o">*</span><span class="n">buffer</span><span class="p">,</span><span class="w"> </span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">buflen</span><span class="p">,</span><span class="w"> </span><span class="n">usbh_complete_callback_t</span><span class="w"> </span><span class="n">complete</span><span class="p">,</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="o">*</span><span class="n">arg</span><span class="p">);</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p><strong>serial</strong>  serial 结构体句柄</p></li>
+<li><p><strong>buffer</strong>  数据缓冲区指针</p></li>
+<li><p><strong>buflen</strong>  要读取的最大数据长度，一次最高 16K。并且需要是 wMaxPacketSize 的整数倍</p></li>
+<li><p><strong>complete</strong>  读数据完成回调函数</p></li>
+<li><p><strong>arg</strong>  回调函数参数</p></li>
+<li><p><strong>return</strong>  0 表示正常其他表示错误</p></li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>如果没有开启 CONFIG_USB_DCACHE_ENABLE，则 buffer 需要是 nocache区域，否则需要是对齐到 CONFIG_USB_ALIGN_SIZE 的区域。</p>
+</div>
+</section>
+</section>
+<section id="hid">
+<h2>HID<a class="headerlink" href="#hid" title="Link to this heading"></a></h2>
+</section>
+<section id="msc">
+<h2>MSC<a class="headerlink" href="#msc" title="Link to this heading"></a></h2>
+<section id="usbh-msc-scsi-init">
+<h3>usbh_msc_scsi_init<a class="headerlink" href="#usbh-msc-scsi-init" title="Link to this heading"></a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">usbh_msc_scsi_init</span></code> 初始化 msc scsi 设备。获取 MSC 状态和容量信息。</p>
+<div class="highlight-C notranslate"><div class="highlight"><pre><span></span><span class="kt">int</span><span class="w"> </span><span class="nf">usbh_msc_scsi_init</span><span class="p">(</span><span class="k">struct</span><span class="w"> </span><span class="nc">usbh_msc</span><span class="w"> </span><span class="o">*</span><span class="n">msc_class</span><span class="p">);</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p><strong>msc_class</strong>  msc 结构体句柄</p></li>
+<li><p><strong>return</strong>  0 表示正常其他表示错误</p></li>
+</ul>
+</section>
+<section id="usbh-msc-scsi-write10">
+<h3>usbh_msc_scsi_write10<a class="headerlink" href="#usbh-msc-scsi-write10" title="Link to this heading"></a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">usbh_msc_scsi_write10</span></code> 向 msc 设备写数据。</p>
+<div class="highlight-C notranslate"><div class="highlight"><pre><span></span><span class="kt">int</span><span class="w"> </span><span class="nf">usbh_msc_scsi_write10</span><span class="p">(</span><span class="k">struct</span><span class="w"> </span><span class="nc">usbh_msc</span><span class="w"> </span><span class="o">*</span><span class="n">msc_class</span><span class="p">,</span><span class="w"> </span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">start_sector</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="kt">uint8_t</span><span class="w"> </span><span class="o">*</span><span class="n">buffer</span><span class="p">,</span><span class="w"> </span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">nsectors</span><span class="p">);</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p><strong>msc_class</strong>  msc 结构体句柄</p></li>
+<li><p><strong>start_sector</strong>  起始扇区</p></li>
+<li><p><strong>buffer</strong>  数据缓冲区指针</p></li>
+<li><p><strong>nsectors</strong>  要写入的扇区数</p></li>
+<li><p><strong>return</strong>  返回 0 表示正常其他表示错误</p></li>
+</ul>
+</section>
+<section id="usbh-msc-scsi-read10">
+<h3>usbh_msc_scsi_read10<a class="headerlink" href="#usbh-msc-scsi-read10" title="Link to this heading"></a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">usbh_msc_scsi_read10</span></code> 从 msc 设备读数据。</p>
+<div class="highlight-C notranslate"><div class="highlight"><pre><span></span><span class="kt">int</span><span class="w"> </span><span class="nf">usbh_msc_scsi_read10</span><span class="p">(</span><span class="k">struct</span><span class="w"> </span><span class="nc">usbh_msc</span><span class="w"> </span><span class="o">*</span><span class="n">msc_class</span><span class="p">,</span><span class="w"> </span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">start_sector</span><span class="p">,</span><span class="w"> </span><span class="kt">uint8_t</span><span class="w"> </span><span class="o">*</span><span class="n">buffer</span><span class="p">,</span><span class="w"> </span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">nsectors</span><span class="p">);</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p><strong>msc_class</strong>  msc 结构体句柄</p></li>
+<li><p><strong>start_sector</strong>  起始扇区</p></li>
+<li><p><strong>buffer</strong>  数据缓冲区指针</p></li>
+<li><p><strong>nsectors</strong>  要读取的扇区数</p></li>
+<li><p><strong>return</strong>  返回 0 表示正常其他表示错误</p></li>
+</ul>
+</section>
+</section>
+<section id="network">
+<h2>NETWORK<a class="headerlink" href="#network" title="Link to this heading"></a></h2>
+<p>已对接 lwIP 协议栈或者其他网络协议栈，使用 socket API 即可。</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="api_device.html" class="btn btn-neutral float-left" title="设备协议栈" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="api_port.html" class="btn btn-neutral float-right" title="主从驱动" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022 ~ 2026, sakumisu.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
