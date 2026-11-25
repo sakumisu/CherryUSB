@@ -49,7 +49,6 @@
 <li class="toctree-l1"><a class="reference internal" href="../quick_start/transplant.html">芯片通用移植指南</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../quick_start/rtthread.html">基于 RT-Thread 软件包开发指南</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../quick_start/q%26a.html">Q &amp; A</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../quick_start/migration.html">部分改动迁移指南</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../quick_start/opensource.html">基于 CherryUSB 的开源项目</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../quick_start/usb_speed.html">USB 极限速度测试</a></li>
 </ul>
@@ -127,6 +126,7 @@
 <p class="caption" role="heading"><span class="caption-text">Release Notes</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../version.html">版本说明</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../migration.html">部分改动迁移指南</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">性能展示</span></p>
 <ul>
@@ -173,7 +173,7 @@
 </ul>
 <div class="highlight-C notranslate"><div class="highlight"><pre><span></span><span class="kt">void</span><span class="w"> </span><span class="nf">usbh_hid_run</span><span class="p">(</span><span class="k">struct</span><span class="w"> </span><span class="nc">usbh_hid</span><span class="w"> </span><span class="o">*</span><span class="n">hid_class</span><span class="p">)</span>
 <span class="p">{</span>
-<span class="w">    </span><span class="n">usb_osal_thread_create</span><span class="p">(</span><span class="s">&quot;usbh_hid&quot;</span><span class="p">,</span><span class="w"> </span><span class="mi">2048</span><span class="p">,</span><span class="w"> </span><span class="n">CONFIG_USBHOST_PSC_PRIO</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">usbh_hid_thread</span><span class="p">,</span><span class="w"> </span><span class="n">hid_class</span><span class="p">);</span>
+<span class="w">    </span><span class="n">usb_osal_thread_create</span><span class="p">(</span><span class="s">&quot;usbh_hid&quot;</span><span class="p">,</span><span class="w"> </span><span class="mi">2048</span><span class="p">,</span><span class="w"> </span><span class="n">CONFIG_USBHOST_PSC_PRIO</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">usbh_hid_thread</span><span class="p">,</span><span class="w"> </span><span class="n">hid_class</span><span class="p">);</span>
 <span class="p">}</span>
 
 <span class="kt">void</span><span class="w"> </span><span class="nf">usbh_hid_stop</span><span class="p">(</span><span class="k">struct</span><span class="w"> </span><span class="nc">usbh_hid</span><span class="w"> </span><span class="o">*</span><span class="n">hid_class</span><span class="p">)</span>

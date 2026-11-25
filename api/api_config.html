@@ -49,7 +49,6 @@
 <li class="toctree-l1"><a class="reference internal" href="../quick_start/transplant.html">芯片通用移植指南</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../quick_start/rtthread.html">基于 RT-Thread 软件包开发指南</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../quick_start/q%26a.html">Q &amp; A</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../quick_start/migration.html">部分改动迁移指南</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../quick_start/opensource.html">基于 CherryUSB 的开源项目</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../quick_start/usb_speed.html">USB 极限速度测试</a></li>
 </ul>
@@ -166,6 +165,7 @@
 <p class="caption" role="heading"><span class="caption-text">Release Notes</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../version.html">版本说明</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../migration.html">部分改动迁移指南</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">性能展示</span></p>
 <ul>
@@ -322,7 +322,7 @@ usbd_msc_sector_read 和 usbd_msc_sector_write 就会在线程中执行。</p>
 </div>
 <section id="config-usbhost-psc-prio">
 <h3>CONFIG_USBHOST_PSC_PRIO<a class="headerlink" href="#config-usbhost-psc-prio" title="Link to this heading"></a></h3>
-<p>主机插拔线程的优先级，默认是 0，数值越小，优先级越高</p>
+<p>主机插拔线程的优先级，默认是 29，数值越小，优先级越高</p>
 </section>
 <section id="config-usbhost-psc-stacksize">
 <h3>CONFIG_USBHOST_PSC_STACKSIZE<a class="headerlink" href="#config-usbhost-psc-stacksize" title="Link to this heading"></a></h3>
